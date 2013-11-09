@@ -3,7 +3,7 @@
 	"short_name": "fl+",
 	"version": "1.2.2",
 	"manifest_version": 2,
-	"homepage_url": "https://chrome.google.com/webstore/detail/fetlife+/damilhebpjeefbhjdhekjeddlkhfefej?hl=en-US",
+	"homepage_url": "https://chrome.google.com/webstore/detail/fetlife+/damilhebpjeefbhjdhekjeddlkhfefej",
 	"author": "Robin Cloutman <rycochet@rycochet.com>",
 
 	"description": "Various improvements to FetLife's user interface...",
