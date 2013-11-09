@@ -1,0 +1,22 @@
+{
+	"name": "Tabs to the Front",
+	"version": "1.0",
+	"manifest_version": 2,
+
+	"permissions": [ "tabs" ],
+
+	"description": "Optionally open new tabs in the front.",
+	"icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png" },
+
+	"browser_action": {
+		"default_title": "New Tabs to Front",
+		"default_icon": "icon48.png"
+	},
+	"background": {
+		"persistent": true,
+		"scripts": ["background.js"]
+	}
+}
