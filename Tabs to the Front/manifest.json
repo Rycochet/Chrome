@@ -2,6 +2,8 @@
 	"name": "Tabs to the Front",
 	"version": "1.0",
 	"manifest_version": 2,
+	"homepage_url": "https://chrome.google.com/webstore/detail/tabs-to-the-front/hiembaoomcehoiehhdldabfgnmphappc",
+	"author": "Robin Cloutman <rycochet@rycochet.com>",
 
 	"permissions": [ "tabs" ],
 
