@@ -1,0 +1,115 @@
+<html>
+<head>
+	<title>FetLife+ Extension Options</title>
+	<link rel="stylesheet" href="chrome_shared.css">
+</head>
+<body style="font-family:'Segoe UI', Tahoma, sans-serif; font-size:75%; color:rgb(48, 57, 66);padding-top:20px;">
+
+<div style="width:155px;position:absolute;padding-left:21px;">
+	<header><h1>FetLife+</h1></header>
+	<ul style="list-style-type:none; padding:0; text-align:left;">
+		<li><button style="border:none; background:none; padding:0; margin:6px 0; cursor:pointer; color:rgb(70, 78, 90); box-shadow:none;">Settings</button></li>
+<!--		<li><button style="border:none; background:none; padding:0; margin:6px 0; cursor:pointer; color:rgb(153, 153, 153); box-shadow:none;">About</button></li>-->
+	</ul>
+</div>
+
+<div style="left:160px;position:absolute;">
+	<header style="position:fixed; height:53px; max-width:738px; min-width:576px;"><h1 style="border-bottom:1px solid #DDDDDD; padding-bottom:13px;">Settings</h1></header>
+
+	<section style="padding-left:12px;margin-top:53px;">
+		<h3 style="margin-left:-12px;">Badge</h3>
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_updates">
+				<span>Show updates count (when a Main Feed tab is open)</span>
+			</label>
+		</div>
+
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_messages">
+				<span>Show new message count</span>
+			</label>
+		</div>
+
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_friends">
+				<span>Show friend request count</span>
+			</label>
+		</div>
+
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_ats">
+				<span>Show @You count</span>
+			</label>
+		</div>
+
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_colour">
+				<span>Change colour depending on count types</span>
+			</label>
+		</div>
+	</section>
+
+	<section style="padding-left:12px;">
+		<h3 style="margin-left:-12px;">Notifications</h3>
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_notify">
+				<span>Popup a notification on new events</span>
+			</label>
+		</div>
+	</section>
+
+	<section style="padding-left:12px;">
+		<h3 style="margin-left:-12px;">Kinky &amp; Popular</h3>
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_kandp_width">
+				<span>Fix K&amp;P navigation bar width</span>
+			</label>
+		</div>
+	</section>
+
+	<section style="padding-left:12px;">
+		<h3 style="margin-left:-12px;">Navigation</h3>
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_navigation">
+				<span>Use graphical navigation bar</span>
+			</label>
+		</div>
+		
+		<div style="padding:7px 0;">
+			<label>
+				<input type="checkbox" id="opt_kandp">
+				<span>Show "Kinky &amp; Popular" menu</span>
+			</label>
+		</div>
+	</section>
+
+	<section style="padding-left:12px;">
+		<h3 style="margin-left:-12px;">Debug</h3>
+		<div style="padding:7px 0;">
+			<label>
+				<select id="debug">
+					<option value="0">Disabled</option>
+					<option value="1">Info</option>
+					<option value="2">Log</option>
+					<option value="3">Warn</option>
+					<option value="4">Error</option>
+				</select>
+				<span>Show debug infomation in the background page</span>
+			</label>
+		</div>
+	</section>
+
+</div>
+
+<script src="options.js"></script>
+
+</body>
+</html>
