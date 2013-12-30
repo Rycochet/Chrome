@@ -2,37 +2,40 @@
  * New tabs to the front, badge toggle to turn it off.
  */
 
-var title = [
-	'New Tabs to the Front',
-	'New Tabs to the Back'
-];
+var updateTimeout = -1;
 
-var icon = [
-	'icon48.png',
-	'icon48r.png'
-];
-
-function get() {
-	return parseInt(localStorage.getItem('front') || 0);
+function isEnabled() {
+	var time = parseInt(localStorage.getItem("front") || 0), now = Date.now();
+	window.clearTimeout(updateTimeout);
+	if (time > now) {
+		updateTimeout = setTimeout(update, time - now + 50);
+	}
+	return time >= 0 && now > time;
 }
 
-function updateBadge() {
-	var front = get();
-	chrome.browserAction.setTitle({title:title[front]});
-	chrome.browserAction.setIcon({path:icon[front]});
+function isToggle() {
+	return parseInt(localStorage.getItem("toggle") || 0) === 1;
+}
+
+function update() {
+	var front = isEnabled();
+	chrome.browserAction.setTitle({title: "New Tabs to the " + (front ? "Front" : "Back")});
+	chrome.browserAction.setIcon({path: "icon48" + (front ? "" : "r") + ".png"});
+	chrome.browserAction.setPopup({popup: isToggle() ? "" : "popup.html"});
 }
 
 function doBadge() {
-	localStorage.setItem('front', 1 - get());
-	updateBadge();
+	localStorage.setItem("front", isEnabled() ? -1 : 0);
+	update();
 }
 
 chrome.tabs.onCreated.addListener(function(tab) {
-	if (!get() && tab.url != 'chrome://newtab/') {
+	if (isEnabled() && tab.url !== "chrome://newtab/") {
 		chrome.tabs.update(tab.id, {selected: true});
 	}
 });
 
 chrome.browserAction.onClicked.addListener(doBadge);
-chrome.runtime.onInstalled.addListener(updateBadge);
-chrome.runtime.onStartup.addListener(updateBadge);
+chrome.runtime.onInstalled.addListener(update);
+chrome.runtime.onStartup.addListener(update);
+window.addEventListener("storage", update, false);
