@@ -1,0 +1,74 @@
+{
+	"extName": {
+		"message": "Tabs to the Front"
+	},
+	"extDescription": {
+		"message": "Optionally open new tabs in the front."
+	},
+	"extTitleEnabled": {
+		"message": "New Tabs to Front",
+		"description": "Button title when enabled."
+	},
+	"extTitleDisabled": {
+		"message": "New Tabs to Back",
+		"description": "Button title when disabled."
+	},
+	"enabled": {
+		"message": "Enabled"
+	},
+	"disabled": {
+		"message": "Disabled"
+	},
+	"enableButton": {
+		"message": "Enable"
+	},
+	"disableButton5": {
+		"message": "Disable for 5 minutes"
+	},
+	"disableButton15": {
+		"message": "Disable for 15 minutes"
+	},
+	"disableButton30": {
+		"message": "Disable for 30 minutes"
+	},
+	"disableButton60": {
+		"message": "Disable for 1 hour"
+	},
+	"disableButtonPerm": {
+		"message": "Disable permanently"
+	},
+	"disabledTime": {
+		"message": "Disabled for $1",
+		"description": "The $1 gets replaces with 01:23 for minutes:seconds."
+	},
+	"donate": {
+		"message": "Donate..."
+	},
+	"settings": {
+		"message": "Settings..."
+	},
+	"optionsSettings": {
+		"message": "Settings"
+	},
+	"optionsBadge": {
+		"message": "Badge"
+	},
+	"optionsBadgeDescription": {
+		"message": "On clicking the badge"
+	},
+	"optionsBadgeMenu": {
+		"message": "Show menu"
+	},
+	"optionsBadgeToggle": {
+		"message": "Toggle disable state"
+	},
+	"optionsMenu": {
+		"message": "Menu"
+	},
+	"optionsHideDonate": {
+		"message": "Hide donation link"
+	},
+	"optionsHideSettings": {
+		"message": "Hide settings link"
+	}
+}

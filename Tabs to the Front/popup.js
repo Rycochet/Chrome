@@ -1,57 +1,108 @@
+/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
+/*global chrome */
+
 (function() {
-	var timer, enable, times = [
-		["Enable", 0],
-		["Disable for 5 minutes", 5 * 60000],
-		["Disable for 15 minutes", 15 * 60000],
-		["Disable for 30 minutes", 30 * 60000],
-		["Disable for 1 hour", 60 * 60000],
-		["Disable permanently", -1]
+	"use strict";
+
+	/**
+	 * Disable for this many ms
+	 * @type Array
+	 */
+	var times = [
+		0, // enable
+		300000, // 5 * 60 * 1000
+		900000, // 15 * 60 * 1000
+		1800000, // 30 * 60 * 1000
+		3600000, // 60 * 60 * 1000
+		-1 // disable
 	];
 
-	function onClick() {
-		var i = this;
-		localStorage.setItem('front', i > 0 ? Date.now() + i : i);
+	/**
+	 * Click on an anchor
+	 * @param {number} ms to disable for
+	 */
+	function click(ms) {
+		localStorage.setItem("front", ms > 0 ? Date.now() + ms : ms);
 		window.close();
 	}
 
-	function updateTime() {
-		var time = parseInt(localStorage.getItem("front") || 0), now = Date.now(), sec;
-		if (time === -1) {
-			timer.nodeValue = "Disabled";
-		} else if (time > now) {
-			time = Math.floor((time - now) / 1000);
-			sec = time % 60;
-			timer.nodeValue = "Disabled for " + Math.floor(time / 60) + ":" + (sec < 10 ? "0" : "") + sec + "";
-			window.setTimeout(updateTime, 1000);
+	/**
+	 * Click on the doante button
+	 */
+	function donate() {
+		chrome.windows.create({
+			"url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SGZD47DBBS5WY",
+			"width": 800,
+			"height": 840,
+			"type": "popup"});
+		window.close();
+	}
+
+	/**
+	 * Shortcut to document.querySelector - if given a number find the nth anchor
+	 * @param {(number|string)} id
+	 * @returns {Element}
+	 */
+	function find(id) {
+		return document.querySelector(typeof id === "number" ? "a:nth-of-type(" + id + ")" : id);
+	}
+
+	/**
+	 * Find an anchor, and bind a click handler to the length of time
+	 * @param {number} id
+	 * @param {number} time
+	 */
+	function bind(id, time) {
+		find(id).addEventListener("click", click.bind(null, time));
+	}
+
+	/**
+	 * Show or hide the Enable anchor
+	 * @param {boolean} hidden
+	 * @param {?number} index
+	 */
+	function enable(hidden, index) {
+		var el = find(index || 2);
+		if (hidden) {
+			el.setAttribute("hidden", "true");
 		} else {
-			if (enable) {
-				enable.parentNode.removeChild(enable.nextSibling);
-				enable.parentNode.removeChild(enable);
-				enable = null;
-			}
-			timer.nodeValue = "Enabled";
+			el.removeAttribute("hidden");
 		}
 	}
 
-	document.addEventListener("DOMContentLoaded", function() {
-		var i, el, body = document.body, time = parseInt(localStorage.getItem("front") || 0), now = Date.now();
-		timer = null;
-		el = body.appendChild(document.createElement("H1"));
-		el.appendChild(document.createTextNode("Tabs to the Front"));
-		el = body.appendChild(document.createElement("SPAN"));
-		timer = el.appendChild(document.createTextNode(""));
-		updateTime();
-		body.appendChild(document.createElement("HR"));
-		for (i = 0; i < times.length; i++) {
-			if (i || (time === -1 || time > now)) {
-				el = body.appendChild(document.createElement("A"));
-				el.appendChild(document.createTextNode(times[i][0]));
-				el.addEventListener("click", onClick.bind(times[i][1]));
-				if (!i) {
-					enable = el;
-					body.appendChild(document.createElement("HR"));
-				}
-			}
+	/**
+	 * Update the enable/disable text, setting a timeout to update if needed
+	 */
+	function updateText() {
+		var time = parseFloat(localStorage.getItem("front") || 0),
+				now = Date.now(),
+				enabled = false,
+				sec;
+		if (time === -1) {
+			find("span").textContent = chrome.i18n.getMessage("disabled");
+		} else if (time > now) {
+			time = Math.floor((time - now) / 1000);
+			sec = time % 60;
+			find("span").textContent = chrome.i18n.getMessage("disabledTime", Math.floor(time / 60) + ":" + (sec < 10 ? "0" : "") + sec);
+			window.setTimeout(updateText, 1000);
+		} else {
+			enabled = true;
+			find("span").textContent = chrome.i18n.getMessage("enabled");
 		}
+		enable(enabled);
+	}
+
+	/**
+	 * Setup all click handlers and start the text update
+	 */
+	document.addEventListener("DOMContentLoaded", function() {
+		var i;
+		find(1).addEventListener("click", donate);
+		for (i = 0; i < times.length; i++) {
+			bind(i + 2, times[i]);
+		}
+		enable(parseFloat(localStorage.getItem("donate") || 0), 1);
+		enable(parseFloat(localStorage.getItem("settings") || 0), "hr:nth-of-type(4)");
+		updateText();
 	});
 }());

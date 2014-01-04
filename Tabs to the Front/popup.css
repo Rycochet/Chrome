@@ -1,0 +1,54 @@
+body {
+	cursor: default;
+	font-family: Open Sans, sans-serif;
+	font-size: 12px;
+	margin: 0;
+}
+
+body > * {
+	box-sizing: border-box;
+	display: block;
+	margin: 0;
+	width: 100%;
+	white-space: nowrap;
+}
+
+body > :not(hr) {
+	-webkit-appearance: none;
+	background: transparent;
+	border: 0;
+	font: inherit;
+	line-height: 18px;
+	overflow: hidden;
+	padding: 2px 19px;
+	text-overflow: ellipsis;
+}
+
+body > hr {
+	background: rgba(0, 0, 0, 0.1);
+	border: 0;
+	height: 1px;
+	margin: 2px 0;
+}
+
+body > :not(a) {
+	color: #bbb;
+}
+
+body > h1 {
+	font-weight: bold;
+}
+
+body > span {
+	font-style: italic;
+}
+
+body > a:hover {
+	background-color: #549af6;
+	color: #fff;
+}
+
+body > [hidden],
+body > [hidden] + * {
+	display: none;
+}
