@@ -44,8 +44,8 @@
 	"donate": {
 		"message": "Donate..."
 	},
-	"settings": {
-		"message": "Settings..."
+	"options": {
+		"message": "Options..."
 	},
 	"optionsSettings": {
 		"message": "Settings"
@@ -68,7 +68,7 @@
 	"optionsHideDonate": {
 		"message": "Hide donation link"
 	},
-	"optionsHideSettings": {
-		"message": "Hide settings link"
+	"optionsHideOptions": {
+		"message": "Hide options link"
 	}
 }

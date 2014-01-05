@@ -39,6 +39,22 @@
 	}
 
 	/**
+	 * Click on the Settings button
+	 */
+	function options() {
+		var url = {"url": chrome.extension.getURL("options.html")};
+
+		chrome.tabs.query(url, function(tabs) {
+			if (tabs.length) {
+				chrome.tabs.update(tabs[0].id, {"active": true});
+			} else {
+				chrome.tabs.create(url);
+			}
+			window.close();
+		});
+	}
+
+	/**
 	 * Shortcut to document.querySelector - if given a number find the nth anchor
 	 * @param {(number|string)} id
 	 * @returns {Element}
@@ -98,6 +114,7 @@
 	document.addEventListener("DOMContentLoaded", function() {
 		var i;
 		find(1).addEventListener("click", donate);
+		find(8).addEventListener("click", options);
 		for (i = 0; i < times.length; i++) {
 			bind(i + 2, times[i]);
 		}
