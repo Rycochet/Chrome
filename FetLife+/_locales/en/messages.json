@@ -1,0 +1,62 @@
+{
+	"extName": {
+		"message": "Fetlife+"
+	},
+	"extDescription": {
+		"message": "Various improvements to FetLife's user interface..."
+	},
+	"donate": {
+		"message": "Donate..."
+	},
+	"options": {
+		"message": "Options..."
+	},
+	"optionsSettings": {
+		"message": "Settings"
+	},
+	"optionsBadge": {
+		"message": "Badge"
+	},
+	"optionsBadgeShowUpdate": {
+		"message": "Show updates count (when a Main Feed tab is open)"
+	},
+	"optionsBadgeShowMessage": {
+		"message": "Show new message count"
+	},
+	"optionsBadgeShowFriends": {
+		"message": "Show friend request count"
+	},
+	"optionsBadgeShowYou": {
+		"message": "Show @You count"
+	},
+	"optionsBadgeColour": {
+		"message": "Change colour depending on count types"
+	},
+	"optionsNotify": {
+		"message": "Notifications"
+	},
+	"optionsNotifyPopup": {
+		"message": "Popup a notification on new events"
+	},
+	"optionsKandP": {
+		"message": "Kinky &amp; Popular"
+	},
+	"optionsKandPWidth": {
+		"message": "Fix K&amp;P navigation bar width"
+	},
+	"optionsNavigation": {
+		"message": "Navigation"
+	},
+	"optionsNavigationGfx": {
+		"message": "Use graphical navigation bar"
+	},
+	"optionsNavigationKandP": {
+		"message": "Show \"Kinky &amp; Popular\" menu"
+	},
+	"optionsHideDonate": {
+		"message": "Hide donation link"
+	},
+	"optionsHideOptions": {
+		"message": "Hide options link"
+	}
+}

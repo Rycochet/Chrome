@@ -1,4 +1,6 @@
-/**
+/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
+/*global chrome, jQuery, fetlife */
+/*
  * FetLife+ - All pages
  * --------
  * Change main navigation bar.
@@ -10,49 +12,42 @@
  * TODO: User-editable menu items, perhaps link to bookmarks?
  */
 
-function Navigation() {
-	this.$bar = $('#navigation_bar ul.sections, #header_v2 ul.sections');
-	this.$shorter = $('li.shorter', this.$bar);
-	this.$longer = $('li.longer', this.$bar);
-	this.$kandp = $('li:first a', this.$bar);
-	this.createLinks();
-	this.load();
+(function($, document) {
+	"use strict";
 
-	var self = this;
-	chrome.storage.onChanged.addListener(function(changes, areaName) {
-		if (changes.opt_navigation || changes.opt_kandp) {
-			self.load();
-		}
+	var $shorter = $(),
+			$longer = $(),
+			$kandp = $(),
+			picto = {
+				"/groups": "g",
+				"/places": "G",
+				"/events/all": "\\",
+				"/fetishes": "Y",
+				"/posts/everyone": "W",
+				"/videos/all": "V"
+			};
+
+	$(document).on("init", function() {
+		var $bar = $("#navigation_bar ul.sections, #header_v2 ul.sections");
+		$shorter = $("li.shorter", $bar);
+		$longer = $("li.longer", $bar);
+		$kandp = $("li:first a", $bar);
+
+		// Setup the picto icons, doesn't need to change again
+		$("a", $longer).each(function(i, el) {
+			var $el = $(el);
+			$el
+					.attr("title", $el.text())
+					.css("font-size", "1.5em")
+					.addClass("picto")
+					.text(picto[$el.attr("href")]);
+		});
 	});
-}
 
-Navigation.prototype.picto = {
-	'/groups': 'g',
-	'/places': 'G',
-	'/events/all': '\\',
-	'/fetishes': 'Y',
-	'/posts/everyone': 'W',
-	'/videos/all': 'V'
-};
-
-Navigation.prototype.createLinks = function() {
-	var self = this;
-	$('a', this.$longer).each(function() {
-		var $this = $(this);
-		$this.attr('title', $this.text());
-		$this.css('font-size', '1.5em');
-		$this.addClass('picto');
-		$this.text(self.picto[$this.attr('href')]);
-	});
-}
-
-Navigation.prototype.load = function() {
-	var self = this;
-	chrome.storage.sync.get(['opt_navigation', 'opt_kandp'], function(data) {
-		self.$shorter.toggle(data.opt_navigation);
-		self.$longer.toggle(!data.opt_navigation);
-		self.$kandp.toggle(!data.opt_kandp);
-	});
-}
-
-var navigation = new Navigation();
+	$(document).on("sync", function() {
+		console.log("fetlife.onChange()");
+		$shorter.toggle(!this.opt_navigation);
+		$longer.toggle(this.opt_navigation);
+		$kandp.toggle(this.opt_kandp);
+	}.bind(fetlife));
+}(jQuery, document));

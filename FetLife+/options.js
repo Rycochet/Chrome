@@ -1,29 +1,30 @@
-// Save and load options
+/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
+/*global chrome, jQuery, fetlife */
 
-function onClick(e){
-	console.log('onClick(' + this.id + ' = ' + this.checked + ')');
-	var option = {};
-	option[this.id] = !this.checked;
-	chrome.storage.sync.set(option);
-}
+(function($, document, fetlife) {
+	"use strict";
 
-function onDebug(e){
-	console.log('onDebug(' + this.value + ')');
-	var option = {};
-	option['debug'] = parseInt(this.value);
-	chrome.storage.local.set(option);
-}
-
-chrome.storage.sync.get(['opt_messages', 'opt_friends', 'opt_ats', 'opt_notify', 'opt_navigation', 'opt_kandp', 'opt_kandp_width'], function(options) {
-	var checkbox = document.querySelectorAll('input[type=checkbox]');
-	for(i=0; i<checkbox.length; i++) {
-		checkbox[i].checked = !options[checkbox[i].id];
-		checkbox[i].addEventListener('click', onClick);
+	/**
+	 * Click handler
+	 * @param {event} event
+	 */
+	function onClick(event) {
+		var option = {};
+		option[event.data] = $(event.target).prop("checked");
+		fetlife.set(option);
 	}
-});
 
-chrome.storage.sync.get(['debug'], function(options) {
-	var debug = document.querySelector('#debug');
-	debug.selectedIndex = options['debug'];
-	debug.addEventListener('change', onDebug);
-});
+	fetlife.setOptions = function() {
+		var i;
+		for (i in fetlife) {
+			if (fetlife.hasOwnProperty(i)) {
+				$("#" + i)
+						.on("click", null, i, onClick)
+						.prop("checked", fetlife[i]);
+			}
+		}
+	};
+
+	$(document).on("init sync", fetlife.setOptions.bind(fetlife));
+
+}(jQuery, document, fetlife));

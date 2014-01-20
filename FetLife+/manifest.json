@@ -1,37 +1,38 @@
 {
-	"name": "FetLife+",
+	"name": "__MSG_extName__",
 	"short_name": "fl+",
 	"version": "1.2.2",
 	"manifest_version": 2,
 	"homepage_url": "https://chrome.google.com/webstore/detail/fetlife+/damilhebpjeefbhjdhekjeddlkhfefej",
 	"author": "Robin Cloutman <rycochet@rycochet.com>",
-
-	"description": "Various improvements to FetLife's user interface...",
+	"default_locale": "en",
+	"description": "__MSG_extName__",
 	"icons": {
 		"16": "icon16.png",
 		"48": "icon48.png",
-		"128": "icon128.png" },
+		"128": "icon128.png"},
 	"options_page": "options.html",
-
-	"content_scripts": [ {
-		"js": [ "jquery.min.js", "jquery.color.min.js", "home_v4.js" ],
-		"matches": [ "https://fetlife.com/home/v4*" ]
-	}, {
-		"js": [ "jquery.min.js", "bookmarks.js", "navigation.js" ],
-		"run_at": "document_end",
-		"matches": [ "https://fetlife.com/*" ]
-	}, {
-		"js": [ "jquery.min.js", "kandp.js" ],
-		"run_at": "document_end",
-		"matches": [ "https://fetlife.com/explore/*" ]
-	} ],
+	"content_scripts": [
+		{
+			"js": ["jquery.min.js", "jquery.color.min.js", "common.js", "home_v4.js"],
+			"matches": ["https://fetlife.com/home/v4*"]
+		}, {
+			"js": ["jquery.min.js", "common.js", "bookmarks.js", "navigation.js"],
+			"run_at": "document_end",
+			"matches": ["https://fetlife.com/*"]
+		}, {
+			"js": ["jquery.min.js", "common.js", "kandp.js"],
+			"run_at": "document_end",
+			"matches": ["https://fetlife.com/explore/*"]
+		}
+	],
 	"browser_action": {
-		"default_title": "FetLife",
+		"default_title": "__MSG_extName__",
 		"default_icon": "icon48.png"
 	},
 	"background": {
-		"persistent": false,
-		"scripts": ["background.js"]
+		"persistent": true,
+		"scripts": ["jquery.min.js", "common.js", "background.js"]
 	},
 	"permissions": [
 		"alarms",
@@ -39,7 +40,7 @@
 		"notifications",
 		"storage",
 		"tabs",
-		"https://fetlife.com/" ],
+		"https://fetlife.com/"],
 	"web_accessible_resources": [
 		"icon48.png"
 	]
