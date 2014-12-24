@@ -27,6 +27,31 @@
 	}
 
 	/**
+	 * Toggle ignoring a domain
+	 */
+	function ignore() {
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			var url = tabs[0].url.match(/.*?:\/+([^\/]+)/)[1];
+
+			if (url && url.length) {
+				var ignored = JSON.parse(localStorage.getItem("ignore") || "[]"),
+						index = ignored.indexOf(url);
+
+				if (index >= 0) {
+					ignored.splice(index, 1);
+				} else {
+					ignored.push(url);
+					ignored.sort(function(a, b) {
+						return a.replace(/^www\./i, "") - b.replace(/^www\./i, "");
+					});
+				}
+				localStorage.setItem("ignore", JSON.stringify(ignored));
+			}
+		});
+		window.close();
+	}
+
+	/**
 	 * Click on the doante button
 	 */
 	function donate() {
@@ -105,6 +130,20 @@
 			enabled = true;
 			find("span").textContent = chrome.i18n.getMessage("enabled");
 		}
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			var index = -1,
+					url = tabs[0].url.match(/https?:\/\/([^\/]+)/),
+					ignored = parseFloat(localStorage.getItem("ignored") || 0);
+
+			if (url && !ignored) {
+				index = JSON.parse(localStorage.getItem("ignore") || "[]").indexOf(url[1]);
+			}
+			enable(!url || ignored, "hr:nth-of-type(4)");
+			find(8).classList.toggle("checked", index >= 0);
+			if (enabled && index >= 0) {
+				find("span").textContent = chrome.i18n.getMessage("ignored");
+			}
+		});
 		enable(enabled);
 	}
 
@@ -114,12 +153,13 @@
 	document.addEventListener("DOMContentLoaded", function() {
 		var i;
 		find(1).addEventListener("click", donate);
-		find(8).addEventListener("click", options);
+		find(8).addEventListener("click", ignore);
+		find(9).addEventListener("click", options);
 		for (i = 0; i < times.length; i++) {
 			bind(i + 2, times[i]);
 		}
 		enable(parseFloat(localStorage.getItem("donate") || 0), 1);
-		enable(parseFloat(localStorage.getItem("settings") || 0), "hr:nth-of-type(4)");
+		enable(parseFloat(localStorage.getItem("settings") || 0), "hr:nth-of-type(5)");
 		updateText();
 	});
 }());

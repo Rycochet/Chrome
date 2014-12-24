@@ -48,6 +48,13 @@ body > a:hover {
 	color: #fff;
 }
 
+body > a.checked::before {
+	content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAQAAAADpb+tAAAAaElEQVR4Xl3PIQoCQQCF4Y8JW42D1bDZ4iVEjDbxFpstYhC7eIVBZHkXFGw734sv/TqDQQ8Xb1udja/I8igeIm7Aygj2IpoKTGZnVRNxAHYi4iPiDlA9xX+aNQDFySziqDN6uSp6y7ofEMwZ05uUZRkAAAAASUVORK5CYII=');
+	position: absolute;
+	left: 0.2em;
+	margin-top: 0.1em;
+}
+
 body > [hidden],
 body > [hidden] + * {
 	display: none;

@@ -19,6 +19,9 @@
 	"disabled": {
 		"message": "Disabled"
 	},
+	"ignored": {
+		"message": "Domain ignored"
+	},
 	"enableButton": {
 		"message": "Enable"
 	},
@@ -36,6 +39,9 @@
 	},
 	"disableButtonPerm": {
 		"message": "Disable permanently"
+	},
+	"ignoreButton": {
+		"message": "Ignore domain"
 	},
 	"disabledTime": {
 		"message": "Disabled for $1",
@@ -70,5 +76,11 @@
 	},
 	"optionsHideOptions": {
 		"message": "Hide options link"
+	},
+	"optionsHideIgnore": {
+		"message": "Hide ignore button"
+	},
+	"optionsIgnore": {
+		"message": "Ignored domains"
 	}
 }
