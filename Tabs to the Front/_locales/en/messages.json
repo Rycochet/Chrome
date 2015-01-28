@@ -83,6 +83,26 @@
 		"message": "Toggle disable state",
 		"description": "Radio button on options page."
 	},
+	"optionsKeyboard": {
+		"message": "Keyboard",
+		"description": "Section heading on options page."
+	},
+	"optionsKeyboardDescription": {
+		"message": "Keyboard shortcuts are available from the \"Keyboard shortcuts\" link at the bottom of the \"Extensions\" page",
+		"description": "Info about finding the keyboard shortcuts."
+	},
+	"optionsKeyboardCtrl": {
+		"message": "Disable when holding the \"Ctrl\" key",
+		"description": "Checkbox on options page, this enables disabling via the Ctrl key."
+	},
+	"optionsKeyboardCtrlDescription": {
+		"message": "IMPORTANT: This requires additional permissions to detect the keyboard on every tab!",
+		"description": "Extra info on options page, let the users know this asks for permissions."
+	},
+	"optionsKeyboardCtrlSeeHere": {
+		"message": "see here",
+		"description": "Extra info on options page, link text (normally lower case)."
+	},
 	"optionsMenu": {
 		"message": "Menu",
 		"description": "Section heading on options page."

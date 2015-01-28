@@ -8,6 +8,9 @@
 	 * Sync data, currently only options
 	 */
 	var sync = {
+		front: false,
+		toggle: false,
+		ctrl: false,
 		donate: false,
 		settings: false,
 		ignore: []
@@ -82,6 +85,21 @@
 	}
 
 	/**
+	 * Set the settings option
+	 */
+	function toggleCtrl() {
+		var checked = this.checked;
+		chrome.permissions[checked ? "request" : "remove"]({
+			origins: ["<all_urls>"]
+		}, function(granted) {
+			if (granted) {
+				sync.ctrl = checked;
+			}
+			update();
+		});
+	}
+
+	/**
 	 * Remove an ignored domain
 	 */
 	function removeIgnore() {
@@ -128,6 +146,7 @@
 		setupInput("#opt_donate", toggleDonate, sync.donate);
 		setupInput("#opt_settings", toggleSettings, sync.settings);
 		setupInput("#opt_ignore", toggleIgnore, sync.ignored);
+		setupInput("#opt_ctrl", toggleCtrl, sync.ctrl);
 
 		createIgnoreList();
 	}

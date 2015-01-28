@@ -25,6 +25,7 @@
 	var sync = {
 		front: false,
 		toggle: false,
+		ctrl: false,
 		ignore: []
 				// Ignore any others as we don't need them here
 	};
@@ -145,14 +146,16 @@
 	 * @param {Number} tabId
 	 */
 	function ctrlInTab(tabId) {
-		chrome.tabs.executeScript(tabId, {
-			file: "keypress.js",
-			allFrames: true,
-			matchAboutBlank: true,
-			runAt: "document_start"
-		}, function() {
-			chrome.runtime.lastError; // Don't worry if we can't hook a tab
-		});
+		if (sync.ctrl) {
+			chrome.tabs.executeScript(tabId, {
+				file: "keypress.js",
+				allFrames: true,
+				matchAboutBlank: true,
+				runAt: "document_start"
+			}, function() {
+				chrome.runtime.lastError; // Don't worry if we can't hook a tab
+			});
+		}
 	}
 
 	// Click on the button unless we're using a menu (by option)
