@@ -44,6 +44,10 @@
 	 * @returns {Boolean}
 	 */
 	function isEnabled(oldTab, newTab) {
+		if (sync.toggle) {
+			return !!sync.front;
+		}
+
 		var ignored,
 				time = sync.front,
 				now = Date.now(),
