@@ -12,9 +12,8 @@ Features
 * "Options..." link can be disable on options page (you can still open it via the Extensions page).
 * A domain ignore list - if both tabs are on the same domain then don't bring the new one to the front.
 * [NEW] Hotkey support to toggle state and toggle ignoring domain.
-* [NEW] Hold the "Ctrl" key to disable.
+* [NEW] Optionally hold the "Ctrl" key to disable (requires additional permissions).
 * Locale support (translations welcome).
 
 This extension is released under the GPL, with source code on GitHub (see the developer website link).
 
-Important: This extension watches your keyboard for the "Ctrl" key only (see the keypress.js file in the source code).
