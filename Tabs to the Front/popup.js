@@ -18,11 +18,23 @@
 	];
 
 	/**
+	 * Sync data, currently only options
+	 */
+	var sync = {
+		front: false,
+		toggle: false,
+		donate: false,
+		settings: false,
+		ignore: []
+	};
+
+	/**
 	 * Click on an anchor
 	 * @param {number} ms to disable for
 	 */
 	function click(ms) {
-		localStorage.setItem("front", ms > 0 ? Date.now() + ms : ms);
+		sync.front = ms > 0 ? Date.now() + ms : ms;
+		chrome.storage.sync.set(sync);
 		window.close();
 	}
 
@@ -34,18 +46,17 @@
 			var url = tabs[0].url.match(/.*?:\/+([^\/]+)/)[1];
 
 			if (url && url.length) {
-				var ignored = JSON.parse(localStorage.getItem("ignore") || "[]"),
-						index = ignored.indexOf(url);
+				var index = sync.ignore.indexOf(url);
 
 				if (index >= 0) {
-					ignored.splice(index, 1);
+					sync.ignore.splice(index, 1);
 				} else {
-					ignored.push(url);
-					ignored.sort(function(a, b) {
+					sync.ignore.push(url);
+					sync.ignore.sort(function(a, b) {
 						return a.replace(/^www\./i, "") - b.replace(/^www\./i, "");
 					});
 				}
-				localStorage.setItem("ignore", JSON.stringify(ignored));
+				chrome.storage.sync.set(sync);
 			}
 		});
 		window.close();
@@ -67,7 +78,7 @@
 	 * Click on the Settings button
 	 */
 	function options() {
-		var url = {"url": chrome.extension.getURL("options.html")};
+		var url = {"url": "chrome://extensions/?options=" + chrome.runtime.id};
 
 		chrome.tabs.query(url, function(tabs) {
 			if (tabs.length) {
@@ -115,7 +126,7 @@
 	 * Update the enable/disable text, setting a timeout to update if needed
 	 */
 	function updateText() {
-		var time = parseFloat(localStorage.getItem("front") || 0),
+		var time = sync.front,
 				now = Date.now(),
 				enabled = false,
 				sec;
@@ -132,13 +143,12 @@
 		}
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			var index = -1,
-					url = tabs[0].url.match(/https?:\/\/([^\/]+)/),
-					ignored = parseFloat(localStorage.getItem("ignored") || 0);
+					url = tabs[0].url.match(/https?:\/\/([^\/]+)/);
 
-			if (url && !ignored) {
-				index = JSON.parse(localStorage.getItem("ignore") || "[]").indexOf(url[1]);
+			if (url && !sync.ignored) {
+				index = sync.ignore.indexOf(url[1]);
 			}
-			enable(!url || ignored, "hr:nth-of-type(4)");
+			enable(!url || sync.ignored, "hr:nth-of-type(4)");
 			find(8).classList.toggle("checked", index >= 0);
 			if (enabled && index >= 0) {
 				find("span").textContent = chrome.i18n.getMessage("ignored");
@@ -151,15 +161,21 @@
 	 * Setup all click handlers and start the text update
 	 */
 	document.addEventListener("DOMContentLoaded", function() {
-		var i;
-		find(1).addEventListener("click", donate);
-		find(8).addEventListener("click", ignore);
-		find(9).addEventListener("click", options);
-		for (i = 0; i < times.length; i++) {
-			bind(i + 2, times[i]);
-		}
-		enable(parseFloat(localStorage.getItem("donate") || 0), 1);
-		enable(parseFloat(localStorage.getItem("settings") || 0), "hr:nth-of-type(5)");
-		updateText();
+		chrome.storage.sync.get(null, function(items) {
+			for (var key in items) {
+				sync[key] = items[key];
+			}
+			var i;
+			find(1).addEventListener("click", donate);
+			find(8).addEventListener("click", ignore);
+			find(9).addEventListener("click", options);
+			for (i = 0; i < times.length; i++) {
+				bind(i + 2, times[i]);
+			}
+			enable(sync.donate, 1);
+			enable(sync.ignored, "hr:nth-of-type(4)");
+			enable(sync.settings, "hr:nth-of-type(5)");
+			updateText();
+		});
 	});
 }());

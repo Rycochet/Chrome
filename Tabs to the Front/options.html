@@ -1,58 +1,70 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title data-i18n="extName"></title>
-		<link rel="stylesheet" href="options.css">
+		<link rel="stylesheet" type="text/css" href="options.css"/>
 		<script type="text/javascript" src="i18n.js"></script>
 		<script type="text/javascript" src="options.js"></script>
 	</head>
 	<body>
-		<div>
-			<h1 data-i18n="extName"></h1>
-			<div data-i18n="optionsSettings"></div>
-		</div>
 
-		<div>
-			<h1 data-i18n="optionsSettings"></h1>
+		<section>
+			<h1 data-i18n="optionsBadge"></h1>
 
-			<section>
-				<h3 data-i18n="optionsBadge"></h3>
+			<div data-i18n="optionsBadgeDescription"></div>
 
-				<div data-i18n="optionsBadgeDescription"></div>
-				<div>
+			<div class="radio">
+				<label>
 					<input name="toggle" type="radio" id="opt_toggle">
-					<label for="opt_toggle" data-i18n="optionsBadgeMenu"></label>
-				</div>
-				<div>
+					<span data-i18n="optionsBadgeMenu"></span>
+				</label>
+			</div>
+			<div class="radio">
+				<label>
 					<input name="toggle" type="radio" id="opt_toggle2">
-					<label for="opt_toggle2" data-i18n="optionsBadgeToggle"></label>
-				</div>
-			</section>
+					<span data-i18n="optionsBadgeToggle"></span>
+				</label>
+			</div>
+		</section>
 
-			<section id="menu_section">
-				<h3 data-i18n="optionsMenu"></h3>
+		<section id="menu_section">
+			<hr/>
 
-				<div>
+			<h1 data-i18n="optionsMenu"></h1>
+
+			<div class="checkbox">
+				<label>
 					<input type="checkbox" id="opt_donate">
-					<label for="opt_donate" data-i18n="optionsHideDonate"></label>
-				</div>
-				<div>
+					<span data-i18n="optionsHideDonate"></span>
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
 					<input type="checkbox" id="opt_settings">
-					<label for="opt_settings" data-i18n="optionsHideOptions"></label>
-				</div>
-				<div>
+					<span data-i18n="optionsHideOptions"></span>
+				</label>
+			</div>
+		</section>
+
+		<section id="ignore_section">
+			<hr/>
+
+			<h1 data-i18n="optionsIgnore"></h1>
+
+			<div class="checkbox">
+				<label>
 					<input type="checkbox" id="opt_ignore">
-					<label for="opt_ignore" data-i18n="optionsHideIgnore"></label>
-				</div>
-			</section>
+					<span data-i18n="optionsHideIgnore"></span>
+				</label>
+			</div>
+			<ul id="ignore_list">
+			</ul>
+		</section>
 
-			<section id="ignore_section">
-				<h3 data-i18n="optionsIgnore"></h3>
-
-				<ul id="ignore_list">
-				</ul>
-			</section>
-
-		</div>
+		<section id="buttons">
+			<input id="button_ok" type="submit" data-i18n="buttonOk" value="">
+            <input id="button_cancel" type="button" data-i18n="buttonCancel" value="">
+		</section>
 
 	</body>
 </html>

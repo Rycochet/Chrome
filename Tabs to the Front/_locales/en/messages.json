@@ -1,9 +1,11 @@
 {
 	"extName": {
-		"message": "Tabs to the Front"
+		"message": "Tabs to the Front",
+		"description": "Name of the extension."
 	},
 	"extDescription": {
-		"message": "Optionally open new tabs in the front."
+		"message": "Optionally open new tabs in the front.",
+		"description": "Description of the extension."
 	},
 	"extTitleEnabled": {
 		"message": "New Tabs to Front",
@@ -14,73 +16,111 @@
 		"description": "Button title when disabled."
 	},
 	"enabled": {
-		"message": "Enabled"
+		"message": "Enabled",
+		"description": "State displayed in popup."
 	},
 	"disabled": {
-		"message": "Disabled"
+		"message": "Disabled",
+		"description": "State displayed in popup."
 	},
 	"ignored": {
-		"message": "Domain ignored"
-	},
-	"enableButton": {
-		"message": "Enable"
-	},
-	"disableButton5": {
-		"message": "Disable for 5 minutes"
-	},
-	"disableButton15": {
-		"message": "Disable for 15 minutes"
-	},
-	"disableButton30": {
-		"message": "Disable for 30 minutes"
-	},
-	"disableButton60": {
-		"message": "Disable for 1 hour"
-	},
-	"disableButtonPerm": {
-		"message": "Disable permanently"
-	},
-	"ignoreButton": {
-		"message": "Ignore domain"
+		"message": "Domain ignored",
+		"description": "State displayed in popup."
 	},
 	"disabledTime": {
 		"message": "Disabled for $1",
-		"description": "The $1 gets replaces with 01:23 for minutes:seconds."
+		"description": "State displayed in popup, the $1 gets replaces with 01:23 for minutes:seconds."
+	},
+	"enableButton": {
+		"message": "Enable",
+		"description": "Option displayed in popup when disabled."
+	},
+	"disableButton5": {
+		"message": "Disable for 5 minutes",
+		"description": "Option displayed in popup, disables for 5 minutes then automatically enables again."
+	},
+	"disableButton15": {
+		"message": "Disable for 15 minutes",
+		"description": "Option displayed in popup, disables for 15 minutes then automatically enables again."
+	},
+	"disableButton30": {
+		"message": "Disable for 30 minutes",
+		"description": "Option displayed in popup, disables for 30 minutes then automatically enables again."
+	},
+	"disableButton60": {
+		"message": "Disable for 1 hour",
+		"description": "Option displayed in popup, disables for 60 minutes then automatically enables again."
+	},
+	"disableButtonPerm": {
+		"message": "Disable permanently",
+		"description": "Option displayed in popup, disables until enabled again."
+	},
+	"ignoreButton": {
+		"message": "Ignore domain",
+		"description": "Option displayed in popup, disables on this domain."
 	},
 	"donate": {
-		"message": "Donate..."
+		"message": "Donate...",
+		"description": "Option displayed in popup, opens a popup window to paypal."
 	},
 	"options": {
-		"message": "Options..."
-	},
-	"optionsSettings": {
-		"message": "Settings"
+		"message": "Options...",
+		"description": "Option displayed in popup, opens a the extension options page in a new tab."
 	},
 	"optionsBadge": {
-		"message": "Badge"
+		"message": "Badge",
+		"description": "Section heading on options page."
 	},
 	"optionsBadgeDescription": {
-		"message": "On clicking the badge"
+		"message": "On clicking the badge",
+		"description": "Info text on options page."
 	},
 	"optionsBadgeMenu": {
-		"message": "Show menu"
+		"message": "Show menu",
+		"description": "Radio button on options page."
 	},
 	"optionsBadgeToggle": {
-		"message": "Toggle disable state"
+		"message": "Toggle disable state",
+		"description": "Radio button on options page."
 	},
 	"optionsMenu": {
-		"message": "Menu"
+		"message": "Menu",
+		"description": "Section heading on options page."
 	},
 	"optionsHideDonate": {
-		"message": "Hide donation link"
+		"message": "Hide donation link",
+		"description": "Checkbox on options page, this hides the popup option."
 	},
 	"optionsHideOptions": {
-		"message": "Hide options link"
-	},
-	"optionsHideIgnore": {
-		"message": "Hide ignore button"
+		"message": "Hide options link",
+		"description": "Checkbox on options page, this hides the popup option."
 	},
 	"optionsIgnore": {
-		"message": "Ignored domains"
+		"message": "Ignored domains",
+		"description": "Section heading on options page."
+	},
+	"optionsHideIgnore": {
+		"message": "Disable ignore list and hide ignore button",
+		"description": "Checkbox on options page, this disables the Ignore list and hides the popup option."
+	},
+	"optionsDomain": {
+		"message": "Add a new domain",
+		"description": "Input box on options page, add a new domain to the ignore list."
+	},
+	"buttonOk": {
+		"message": "OK",
+		"description": "Button on options page."
+	},
+	"buttonCancel": {
+		"message": "Cancel",
+		"description": "Button on options page."
+	},
+	"keyboardShortcutToggle": {
+		"message": "Toggle disable state",
+		"description": "Keyboard shortcut, toggles between Enabled and Disabled."
+	},
+	"keyboardShortcutIgnore": {
+		"message": "Toggle ignoring domain",
+		"description": "Keyboard shortcut, toggles whether the current domain is on the ignore list."
 	}
 }

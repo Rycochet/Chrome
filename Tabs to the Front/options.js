@@ -5,45 +5,21 @@
 	"use strict";
 
 	/**
+	 * Sync data, currently only options
+	 */
+	var sync = {
+		donate: false,
+		settings: false,
+		ignore: []
+	};
+
+	/**
 	 * Shortcut to document.querySelector - if given a number find the nth anchor
 	 * @param {(number|string)} id
 	 * @returns {Element}
 	 */
 	function find(id) {
 		return document.querySelector(id);
-	}
-
-	/**
-	 * Toggle the menu / toggle item and hide the menu section if needed
-	 */
-	function toggleMenu() {
-		var toggleVal = find("#opt_toggle").checked;
-		localStorage.setItem("toggle", toggleVal ? 0 : 1);
-		find("#menu_section").style.display = toggleVal ? "" : "none";
-		find("#ignore_section").style.display = !toggleVal || find("#opt_ignore").checked ? "none" : "";
-	}
-
-	/**
-	 * Toggle the menu / toggle item and hide the menu section if needed
-	 */
-	function toggleIgnore() {
-		var toggleVal = this.checked;
-		localStorage.setItem("ignored", toggleVal ? 1 : 0);
-		find("#ignore_section").style.display = !find("#opt_toggle").checked || toggleVal ? "none" : "";
-	}
-
-	/**
-	 * Set the donate option
-	 */
-	function toggleDonate() {
-		localStorage.setItem("donate", this.checked ? 1 : 0);
-	}
-
-	/**
-	 * Set the settings option
-	 */
-	function toggleSettings() {
-		localStorage.setItem("settings", this.checked ? 1 : 0);
 	}
 
 	/**
@@ -59,59 +35,125 @@
 	}
 
 	/**
+	 * Save data to sync storage
+	 */
+	function save() {
+		chrome.storage.sync.set(sync);
+		close();
+	}
+
+	/**
+	 * Close options window
+	 */
+	function close() {
+		window.close();
+	}
+
+	/**
+	 * Toggle the menu / toggle item and hide the menu section if needed
+	 */
+	function toggleMenu() {
+		sync.toggle = !find("#opt_toggle").checked;
+		update();
+	}
+
+	/**
+	 * Toggle the menu / toggle item and hide the menu section if needed
+	 */
+	function toggleIgnore() {
+		sync.ignored = this.checked;
+		update();
+	}
+
+	/**
+	 * Set the donate option
+	 */
+	function toggleDonate() {
+		sync.donate = this.checked;
+		update();
+	}
+
+	/**
+	 * Set the settings option
+	 */
+	function toggleSettings() {
+		sync.settings = this.checked;
+		update();
+	}
+
+	/**
 	 * Remove an ignored domain
 	 */
 	function removeIgnore() {
 		var li = this.parentNode,
 				url = li.textContent,
-				ignored = JSON.parse(localStorage.getItem("ignore") || "[]"),
-				index = ignored.indexOf(url);
+				index = sync.ignore.indexOf(url);
 
 		if (index >= 0) {
-			ignored.splice(index, 1);
-			localStorage.setItem("ignore", JSON.stringify(ignored));
+			sync.ignore.splice(index, 1);
 			li.remove();
 		}
+		update();
 	}
 
 	function createIgnoreList() {
-		var i, li, div,
-				ignoreList = JSON.parse(localStorage.getItem("ignore") || "[]"),
+		var i, li, div, span, button,
 				ul = find("#ignore_list");
 
 		while (ul.hasChildNodes()) {
 			ul.removeChild(ul.lastChild);
 		}
-		for (i = 0; i < ignoreList.length; i++) {
+		for (i = 0; i < sync.ignore.length; i++) {
+			//background-image: -webkit-image-set(url(chrome://favicon/size/16@1x/iconurl/http://www.amazon.co.uk/favicon.ico) 1x);
 			li = document.createElement("li");
 			div = document.createElement("div");
-			div.appendChild(document.createElement("button"));
-			div.appendChild(document.createTextNode(ignoreList[i]));
-			div.addEventListener("click", removeIgnore);
+			span = document.createElement("span");
+			button = document.createElement("button");
+			button.addEventListener("click", removeIgnore);
+			span.style.backgroundImage = "url(chrome://favicon/size/16@1x/iconurl/http://" + sync.ignore[i] + "/favicon.ico)";
+			div.appendChild(span);
+			div.appendChild(button);
+			div.appendChild(document.createTextNode(sync.ignore[i]));
 			li.appendChild(div);
 			ul.appendChild(li);
 		}
 	}
 
+	function update() {
+		find("#menu_section").style.display = sync.toggle ? "none" : "";
+		find("#ignore_list").style.display = sync.ignored ? "none" : "";
+
+		setupInput("#opt_toggle", toggleMenu, !sync.toggle);
+		setupInput("#opt_toggle2", toggleMenu, sync.toggle);
+		setupInput("#opt_donate", toggleDonate, sync.donate);
+		setupInput("#opt_settings", toggleSettings, sync.settings);
+		setupInput("#opt_ignore", toggleIgnore, sync.ignored);
+
+		createIgnoreList();
+	}
+
 	// Make sure we update if still open
-	window.addEventListener("storage", createIgnoreList, false);
+	chrome.storage.onChanged.addListener(function(changes, areaName) {
+		if (areaName === "sync") {
+			for (var key in changes) {
+				sync[key] = changes[key].newValue;
+			}
+			update();
+		}
+	});
 
 	/**
 	 * Setup all click handlers and start the text update
 	 */
 	document.addEventListener("DOMContentLoaded", function() {
-		var toggleVal = parseFloat(localStorage.getItem("toggle") || 0),
-				ignoreVal = parseFloat(localStorage.getItem("ignored") || 0);
+		find("#button_ok").addEventListener("click", save);
+		find("#button_cancel").addEventListener("click", close);
 
-		find("#menu_section").style.display = toggleVal ? "none" : "";
-		find("#ignore_section").style.display = toggleVal || ignoreVal ? "none" : "";
-
-		setupInput("#opt_toggle", toggleMenu, !toggleVal);
-		setupInput("#opt_toggle2", toggleMenu, toggleVal);
-		setupInput("#opt_donate", toggleDonate, parseFloat(localStorage.getItem("donate") || 0));
-		setupInput("#opt_settings", toggleSettings, parseFloat(localStorage.getItem("settings") || 0));
-		setupInput("#opt_ignore", toggleIgnore, ignoreVal);
-
-		createIgnoreList();
+		chrome.storage.sync.get(null, function(items) {
+			for (var key in items) {
+				sync[key] = items[key];
+			}
+			update();
+		});
 	});
 }());
