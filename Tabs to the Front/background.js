@@ -35,7 +35,8 @@
 	 * @param {Object} tab
 	 */
 	function getDomain(tab) {
-		return tab && tab.url.match(/https?:\/+([^\/]+)/);
+		var url = tab && tab.url.match(/https?:\/+([^\/]+)/);
+		return url ? url[1].toLowerCase() : null;
 	}
 
 	/**
@@ -59,8 +60,8 @@
 		if (time > now) {
 			updateTimeout = setTimeout(update, time - now + 50);
 		}
-		if ((newTab && oldUrl && newUrl && oldUrl[1] === newUrl[1]) || (!newTab && oldUrl)) {
-			ignored = sync.ignore.indexOf(oldUrl[1]) >= 0;
+		if (oldUrl && (!newTab || oldUrl === newUrl)) {
+			ignored = sync.ignore.indexOf(oldUrl) >= 0;
 		}
 		return !local.ctrl && !ignored && time >= 0 && now > time;
 	}

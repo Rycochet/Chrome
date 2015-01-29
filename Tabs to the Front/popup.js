@@ -43,20 +43,23 @@
 	 */
 	function ignore() {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			var url = tabs[0].url.match(/.*?:\/+([^\/]+)/)[1];
+			try {
+				var url = tabs[0].url.match(/.*?:\/+([^\/]+)/)[1].toLowerCase(); // throws exception if not found
 
-			if (url && url.length) {
-				var index = sync.ignore.indexOf(url);
+				if (url) {
+					var index = sync.ignore.indexOf(url);
 
-				if (index >= 0) {
-					sync.ignore.splice(index, 1);
-				} else {
-					sync.ignore.push(url);
-					sync.ignore.sort(function(a, b) {
-						return a.replace(/^www\./i, "") - b.replace(/^www\./i, "");
-					});
+					if (index >= 0) {
+						sync.ignore.splice(index, 1);
+					} else {
+						sync.ignore.push(url);
+						sync.ignore.sort(function(a, b) {
+							return a.replace(/^www\./i, "") - b.replace(/^www\./i, "");
+						});
+					}
+					chrome.storage.sync.set(sync);
 				}
-				chrome.storage.sync.set(sync);
+			} catch (e) {
 			}
 		});
 		window.close();
