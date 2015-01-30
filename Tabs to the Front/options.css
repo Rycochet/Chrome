@@ -1,5 +1,5 @@
 body {
-	margin: 8px 17px 54px 17px;
+	padding-bottom: 50px;
 	-webkit-user-select: none;
 }
 
@@ -12,18 +12,19 @@ section > div[data-i18n] {
 	margin-bottom: 5px;
 }
 
-hr {
-	background-color: #ddd;
-	border: 0;
-	height: 1px;
-	text-align: left;
-	width: 100%;
+section + section {
+	border-top: 1px solid #ddd;
+	margin-top: 0.5em;
 }
 
 .info,
 .radio,
 .checkbox {
-	padding: 7px 18px;
+	padding: 0 18px;
+}
+
+label {
+	padding: 7px 0;
 }
 
 input + span {
@@ -46,11 +47,29 @@ input + span {
 	position: relative;
 	padding: 0.64em 2.5em;
 	cursor: default;
+	background-color: white;
+	border-color: white;
 }
 
+#ignore_list > li > div.focus,
 #ignore_list > li > div:hover {
-	background-color: hsl(214, 91%, 97%);
-	border-color: hsl(214, 91%, 85%);
+	background-color: rgb(217, 217, 217);
+	border-color: rgb(217, 217, 217);
+}
+
+#ignore_list > li:not(:last-child) > div > input:not(:focus) {
+	background-color: inherit;
+	border-color: inherit;
+	cursor: default;
+}
+
+#ignore_list > li > div > input {
+	margin: -4px 0 -5px 0;
+	width: 100%;
+}
+
+#ignore_list > li > div > input:focus {
+	background: pink;
 }
 
 #ignore_list > li > div > span {

@@ -100,43 +100,105 @@
 	}
 
 	/**
+	 * Get the element index
+	 * @param {Element} element
+	 * @returns {Number}
+	 */
+	function indexOf(element) {
+		var index = -1;
+		while (element) {
+			element = element.previousSibling;
+			index++;
+		}
+		return index;
+	}
+
+	/**
+	 * Add an ignore if the return key is pressed
+	 * @param {Event} event
+	 */
+	function addIgnore(event) {
+		var keyCode = event.keyCode;
+
+		if (keyCode === 13) {
+			var list = this.parentNode.parentNode,
+					index = -1,
+					domain = this.value.replace(/(^http?s:\/?\/?|^\/+|\/.*$)/g, "");
+
+			if (sync.ignore.indexOf(domain) === -1) {
+				if (list.nextSibling) {
+					index = indexOf(list);
+				}
+				if (index >= 0) {
+					sync.ignore[index] = domain;
+				} else {
+					sync.ignore.push(domain);
+				}
+				update();
+			}
+		}
+	}
+
+	/**
 	 * Remove an ignored domain
 	 */
 	function removeIgnore() {
-		var li = this.parentNode,
-				url = li.textContent,
-				index = sync.ignore.indexOf(url);
+		var index = indexOf(this.parentNode.parentNode);
 
 		if (index >= 0) {
 			sync.ignore.splice(index, 1);
-			li.remove();
 		}
 		update();
 	}
 
+	function focusInput() {
+		this.parentNode.classList.add("focus");
+	}
+
+	function blurInput() {
+		this.parentNode.classList.remove("focus");
+		if (this.parentNode.parentNode.nextSibling) {
+			addIgnore.call(this, {keyCode: 13});
+		}
+	}
+
+	/**
+	 * Create the ignore list, including the "Add domain" box
+	 */
 	function createIgnoreList() {
-		var i, li, div, span, button,
+		var i, li, div, span, button, input,
 				ul = find("#ignore_list");
 
 		while (ul.hasChildNodes()) {
 			ul.removeChild(ul.lastChild);
 		}
-		for (i = 0; i < sync.ignore.length; i++) {
-			//background-image: -webkit-image-set(url(chrome://favicon/size/16@1x/iconurl/http://www.amazon.co.uk/favicon.ico) 1x);
+		for (i = 0; i <= sync.ignore.length; i++) {
 			li = document.createElement("li");
 			div = document.createElement("div");
-			span = document.createElement("span");
-			button = document.createElement("button");
-			button.addEventListener("click", removeIgnore);
-			span.style.backgroundImage = "url(chrome://favicon/size/16@1x/iconurl/http://" + sync.ignore[i] + "/favicon.ico)";
-			div.appendChild(span);
-			div.appendChild(button);
-			div.appendChild(document.createTextNode(sync.ignore[i]));
+			input = document.createElement("input");
+			input.type = "text";
+			input.placeholder = chrome.i18n.getMessage("optionsDomain");
+			input.addEventListener("keyup", addIgnore);
+			input.addEventListener("focus", focusInput);
+			input.addEventListener("blur", blurInput);
+			if (i < sync.ignore.length) {
+				span = document.createElement("span");
+				button = document.createElement("button");
+				button.addEventListener("click", removeIgnore);
+				span.style.backgroundImage = "url(chrome://favicon/size/16@1x/iconurl/http://" + sync.ignore[i] + "/favicon.ico)";
+				input.value = sync.ignore[i];
+				div.appendChild(span);
+				div.appendChild(button);
+			}
+			div.appendChild(input);
 			li.appendChild(div);
 			ul.appendChild(li);
 		}
 	}
 
+	/**
+	 * Update the options display
+	 */
 	function update() {
 		find("#menu_section").style.display = sync.toggle ? "none" : "";
 		find("#ignore_list").style.display = sync.ignored ? "none" : "";
