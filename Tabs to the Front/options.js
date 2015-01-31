@@ -108,7 +108,9 @@
 		var index = -1;
 		while (element) {
 			element = element.previousSibling;
-			index++;
+			if (element.nodeType === 1) {
+				index++;
+			}
 		}
 		return index;
 	}
