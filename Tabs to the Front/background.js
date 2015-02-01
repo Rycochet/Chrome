@@ -66,7 +66,7 @@
 		} else if (time === -1) {
 			ignored = true;
 		}
-		return (sync.ctrl && !local.ctrl) && !ignored;
+		return (!sync.ctrl || !local.ctrl) && !ignored;
 	}
 
 	/**
