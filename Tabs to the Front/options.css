@@ -1,4 +1,5 @@
 body {
+	/*min-width: 620px;*/
 	padding-bottom: 50px;
 	-webkit-user-select: none;
 }
@@ -24,6 +25,7 @@ section + section {
 }
 
 label {
+	display: inline-block;
 	padding: 7px 0;
 }
 

@@ -26,6 +26,7 @@
 		front: false,
 		toggle: false,
 		ctrl: false,
+		badge: false,
 		ignore: []
 				// Ignore any others as we don't need them here
 	};
@@ -46,24 +47,26 @@
 	 * @returns {Boolean}
 	 */
 	function isEnabled(oldTab, newTab) {
-		if (sync.toggle) {
-			return !!sync.front;
-		}
-
 		var ignored,
 				time = sync.front,
 				now = Date.now(),
 				oldUrl = getDomain(oldTab),
 				newUrl = getDomain(newTab);
 
-		window.clearTimeout(updateTimeout);
-		if (time > now) {
-			updateTimeout = setTimeout(update, time - now + 50);
-		}
 		if (oldUrl && (!newTab || oldUrl === newUrl)) {
 			ignored = sync.ignore.indexOf(oldUrl) >= 0;
 		}
-		return !local.ctrl && !ignored && time >= 0 && now > time;
+		if (!sync.badge) {
+			chrome.browserAction.setBadgeText({text: ignored ? "!" : ""});
+		}
+		window.clearTimeout(updateTimeout);
+		if (time > now) {
+			updateTimeout = setTimeout(update, time - now + 50);
+			ignored = true;
+		} else if (time === -1) {
+			ignored = true;
+		}
+		return !local.ctrl && !ignored;
 	}
 
 	/**
@@ -72,7 +75,10 @@
 	function update() {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			var front = isEnabled(tabs[0]);
-			chrome.browserAction.setTitle({title: "New Tabs to the " + (front ? "Front" : "Back")});
+			if (sync.toggle) {
+				front = sync.front >= 0;
+			}
+			chrome.browserAction.setTitle({title: chrome.i18n.getMessage(front ? "extTitleEnabled" : "extTitleDisabled")});
 			chrome.browserAction.setIcon({path: "icon48" + (front ? "" : "r") + ".png"});
 			chrome.browserAction.setPopup({popup: sync.toggle ? "" : "popup.html"});
 		});
@@ -113,7 +119,7 @@
 	 * Toggle enabled state
 	 */
 	function toggle() {
-		sync.front = !sync.front;
+		sync.front = sync.front ? 0 : -1;
 		chrome.storage.sync.set(sync);
 		update();
 	}

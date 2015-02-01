@@ -13,6 +13,7 @@
 		ctrl: false,
 		donate: false,
 		settings: false,
+		badge: false,
 		ignore: []
 	};
 
@@ -204,9 +205,11 @@
 	function update() {
 		find("#menu_section").style.display = sync.toggle ? "none" : "";
 		find("#ignore_list").style.display = sync.ignored ? "none" : "";
+		find("#opt_badge").parentNode.style.display = sync.ignored ? "none" : "";
 
 		setupInput("#opt_toggle", toggleMenu, !sync.toggle);
 		setupInput("#opt_toggle2", toggleMenu, sync.toggle);
+		setupInput("#opt_badge", toggleMenu, !sync.badge);
 		setupInput("#opt_donate", toggleDonate, sync.donate);
 		setupInput("#opt_settings", toggleSettings, sync.settings);
 		setupInput("#opt_ignore", toggleIgnore, sync.ignored);

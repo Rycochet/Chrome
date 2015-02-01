@@ -123,6 +123,10 @@
 		"message": "Disable ignore list and hide ignore button",
 		"description": "Checkbox on options page, this disables the Ignore list and hides the popup option."
 	},
+	"optionsBadgeIgnore": {
+		"message": "Show \"!\" on badge when ignored",
+		"description": "Checkbox on options page, show an \"!\" on the badge when the domain is ignored."
+	},
 	"optionsDomain": {
 		"message": "Add a new domain",
 		"description": "Input box on options page, add a new domain to the ignore list."
