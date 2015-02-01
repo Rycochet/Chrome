@@ -66,7 +66,7 @@
 		} else if (time === -1) {
 			ignored = true;
 		}
-		return !local.ctrl && !ignored;
+		return (sync.ctrl && !local.ctrl) && !ignored;
 	}
 
 	/**
@@ -195,6 +195,13 @@
 		var storage = areaName === "local" ? local : sync;
 		for (var key in changes) {
 			storage[key] = changes[key].newValue;
+		}
+		if (storage === sync && changes.sync && changes.sync.newValue) {
+			chrome.tabs.query({}, function(tabs) {
+				for (var i in tabs) {
+					ctrlInTab(tabs[i].id);
+				}
+			});
 		}
 		update();
 	});
