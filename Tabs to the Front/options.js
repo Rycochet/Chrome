@@ -188,7 +188,7 @@
 				span = document.createElement("span");
 				button = document.createElement("button");
 				button.addEventListener("click", removeIgnore);
-				span.style.backgroundImage = "url(chrome://favicon/size/16@1x/iconurl/http://" + sync.ignore[i] + "/favicon.ico)";
+				span.style.backgroundImage = "url('http://" + sync.ignore[i] + "/favicon.ico')";
 				input.value = sync.ignore[i];
 				div.appendChild(span);
 				div.appendChild(button);
