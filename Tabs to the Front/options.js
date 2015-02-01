@@ -107,10 +107,10 @@
 	function indexOf(element) {
 		var index = -1;
 		while (element) {
-			element = element.previousSibling;
 			if (element.nodeType === 1) {
 				index++;
 			}
+			element = element.previousSibling;
 		}
 		return index;
 	}
