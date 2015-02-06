@@ -4,7 +4,7 @@
  * New tabs to the front, badge toggle to turn it off.
  */
 
-(function() {
+(function(window, chrome) {
 	"use strict";
 
 	/**
@@ -101,11 +101,7 @@
 				localStorage.clear();
 			}
 			// Watch for ctrl key
-			chrome.tabs.query({}, function(tabs) {
-				for (var i in tabs) {
-					ctrlInTab(tabs[i].id);
-				}
-			});
+			ctrlInAllTabs();
 			update();
 		});
 	}
@@ -144,7 +140,7 @@
 	}
 
 	/**
-	 * Inject the sontent script to watch for the tab key
+	 * Inject the content script to watch for the tab key
 	 * @param {Number} tabId
 	 */
 	function ctrlInTab(tabId) {
@@ -158,6 +154,18 @@
 				chrome.runtime.lastError; // Don't worry if we can't hook a tab
 			});
 		}
+	}
+
+	/**
+	 * Inject the content script to watch for the tab key in all tabs (that
+	 * don't already have it).
+	 */
+	function ctrlInAllTabs() {
+		chrome.tabs.query({}, function(tabs) {
+			for (var i in tabs) {
+				ctrlInTab(tabs[i].id);
+			}
+		});
 	}
 
 	// Click on the button unless we're using a menu (by option)
@@ -192,11 +200,7 @@
 			storage[key] = changes[key].newValue;
 		}
 		if (storage === sync && changes.sync && changes.sync.newValue) {
-			chrome.tabs.query({}, function(tabs) {
-				for (var i in tabs) {
-					ctrlInTab(tabs[i].id);
-				}
-			});
+			ctrlInAllTabs();
 		}
 		update();
 	});
@@ -216,4 +220,4 @@
 
 	// When we're already installed and browser starts
 	chrome.runtime.onStartup.addListener(startup);
-}());
+}(window, chrome));
