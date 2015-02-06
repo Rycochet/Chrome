@@ -1,9 +1,6 @@
-/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
-/*global chrome */
 /*
  * New tabs to the front, badge toggle to turn it off.
  */
-
 (function(window, chrome) {
 	"use strict";
 

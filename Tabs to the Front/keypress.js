@@ -8,14 +8,17 @@
  * This is the source code for "Tabs to the Front" -
  * https://chrome.google.com/webstore/detail/tabs-to-the-front/hiembaoomcehoiehhdldabfgnmphappc
  */
+(function(window, chrome) {
+	"use strict";
 
-function sendCtrl(event) {
-	chrome.storage.local.set({
-		ctrl: event.ctrlKey
-	});
-}
+	function sendCtrl(event) {
+		chrome.storage.local.set({
+			ctrl: event.ctrlKey
+		});
+	}
 
-// Listen for the two keypress events, the "true" on the end means we're grabbing
-// them before anything else can interrupt them...
-window.addEventListener("keydown", sendCtrl, true);
-window.addEventListener("keyup", sendCtrl, true);
+	// Listen for the two keypress events, the "true" on the end means we're grabbing
+	// them before anything else can interrupt them...
+	window.addEventListener("keydown", sendCtrl, true);
+	window.addEventListener("keyup", sendCtrl, true);
+}(window, chrome));

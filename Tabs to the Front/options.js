@@ -1,7 +1,4 @@
-/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
-/*global chrome */
-
-(function() {
+(function(document, window, chrome) {
 	"use strict";
 
 	/**
@@ -242,4 +239,4 @@
 			update();
 		});
 	});
-}());
+}(document, window, chrome));
