@@ -81,26 +81,12 @@
 
 	/**
 	 * Called when starting - cache our info
-	 * @param {?Object} details
 	 */
-	function startup(details) {
+	function startup() {
 		chrome.storage.sync.get(null, function(items) {
 			for (var key in items) {
 				sync[key] = items[key];
 			}
-			// Updating from an earlier version that used localStorage
-			// TODO: Remove this section in a couple of months...
-			if (details && details.reason === "update" && parseFloat(details.previousVersion) <= 1.5) {
-				sync.ignore = sync.ignore.length ? sync.ignore : JSON.parse(localStorage.getItem("ignore") || "[]");
-				sync.front |= parseFloat(localStorage.getItem("front") || 0);
-				sync.toggle |= parseFloat(localStorage.getItem("toggle") || 0);
-				sync.ignored |= parseFloat(localStorage.getItem("ignored") || 0);
-				sync.donate |= parseFloat(localStorage.getItem("donate") || 0);
-				sync.settings |= parseFloat(localStorage.getItem("settings") || 0);
-				chrome.storage.sync.set(sync);
-				localStorage.clear();
-			}
-			// Watch for ctrl key
 			ctrlInAllTabs();
 			update();
 		});
