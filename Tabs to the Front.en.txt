@@ -16,4 +16,3 @@ Features
 * Locale support (translations welcome).
 
 This extension is released under the GPL, with source code on GitHub (see the developer website link).
-
