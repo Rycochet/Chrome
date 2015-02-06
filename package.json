@@ -1,0 +1,30 @@
+{
+  "name": "ChromeExtensions",
+  "version": "1.0.0",
+  "description": "Various Chrome extensions",
+  "license": "GPLv2",
+  "author": "Ryc O'Chet <rycochet@rycochet.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Rycochet/Chrome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rycochet/Chrome/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-compress": "^0.13.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-cssmin": "^0.11.0",
+    "grunt-contrib-htmlmin": "^0.4.0",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jsonmin": "^0.2.4",
+    "grunt-newer": "^1.1.0"
+  },
+  "scripts": {
+    "build": "npm install && grunt",
+    "start": "grunt"
+  },
+  "private": true
+}
