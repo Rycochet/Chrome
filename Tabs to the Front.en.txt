@@ -8,9 +8,9 @@ Features
 * Popup menu allows you to disable it for a period of time.
 * Options page (using new Chrome v40 styles).
 * Change the button between toggle state or popup menu.
-* "Donation..." link can be hidden on the options page.
-* "Options..." link can be disable on options page (you can still open it via the Extensions page).
-* A domain ignore list - if both tabs are on the same domain then don't bring the new one to the front.
+* "Donation..." link can be hidden via the options page.
+* "Options..." link can be disable via options page (you can still open it by right-clicking or on the Extensions page).
+* A domain ignore list - if both tabs are on ignored domains then don't bring the new one to the front.
 * [NEW] Hotkey support to toggle state and toggle ignoring domain.
 * [NEW] Optionally hold the "Ctrl" key to disable (requires additional permissions).
 * Locale support (translations welcome).
