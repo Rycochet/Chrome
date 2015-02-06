@@ -32,12 +32,12 @@
 	};
 
 	/**
-	 * Get the domain for a tab if possible
+	 * Check if a domain is ignored if possible
 	 * @param {Object} tab
 	 */
-	function getDomain(tab) {
+	function isIgnored(tab) {
 		var url = tab && tab.url.match(/https?:\/+([^\/]+)/);
-		return url ? url[1].toLowerCase() : null;
+		return url ? sync.ignore.indexOf(url[1].toLowerCase()) >= 0 : null;
 	}
 
 	/**
@@ -47,15 +47,10 @@
 	 * @returns {Boolean}
 	 */
 	function isEnabled(oldTab, newTab) {
-		var ignored,
+		var now = Date.now(),
 				time = sync.front,
-				now = Date.now(),
-				oldUrl = getDomain(oldTab),
-				newUrl = getDomain(newTab);
+				ignored = isIgnored(oldTab) && (!newTab || isIgnored(newTab));
 
-		if (oldUrl && (!newTab || oldUrl === newUrl)) {
-			ignored = sync.ignore.indexOf(oldUrl) >= 0;
-		}
 		if (!sync.badge) {
 			chrome.browserAction.setBadgeText({text: ignored ? "!" : ""});
 		}
