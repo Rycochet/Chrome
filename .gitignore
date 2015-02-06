@@ -40,3 +40,8 @@
 ehthumbs.db
 Thumbs.db
 /nbproject/private/
+
+# grunt related files #
+#######################
+/node_modules
+/build
