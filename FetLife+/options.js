@@ -1,30 +1,51 @@
-/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
-/*global chrome, jQuery, fetlife */
-
-(function($, document, fetlife) {
+(function($, document, window, chrome, fetlife) {
 	"use strict";
+
+	var sync = {};
+
+	/**
+	 * Save data to sync storage
+	 */
+	function save() {
+		chrome.storage.sync.set(sync);
+		close();
+	}
+
+	/**
+	 * Close options window
+	 */
+	function close() {
+		window.close();
+	}
 
 	/**
 	 * Click handler
 	 * @param {event} event
 	 */
 	function onClick(event) {
-		var option = {};
-		option[event.data] = $(event.target).prop("checked");
-		fetlife.set(option);
+		sync[event.data] = $(event.target).prop("checked");
 	}
 
-	fetlife.setOptions = function() {
-		var i;
-		for (i in fetlife) {
-			if (fetlife.hasOwnProperty(i)) {
-				$("#" + i)
-						.on("click", null, i, onClick)
-						.prop("checked", fetlife[i]);
-			}
+	/**
+	 * Update local sync data
+	 */
+	function update() {
+		for (var index in fetlife.sync) {
+			sync[index] = fetlife.sync[index];
+			$("#opt_" + index)
+					.on("click", null, index, onClick)
+					.prop("checked", sync[index]);
 		}
-	};
+	}
 
-	$(document).on("init sync", fetlife.setOptions.bind(fetlife));
+	fetlife.onSync(update);
 
-}(jQuery, document, fetlife));
+	/**
+	 * Setup all click handlers and start the text update
+	 */
+	document.addEventListener("DOMContentLoaded", function() {
+		$("#button_ok").on("click", save);
+		$("#button_cancel").on("click", close);
+		update();
+	});
+}(jQuery, document, window, chrome, fetlife));

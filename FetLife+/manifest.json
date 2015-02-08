@@ -1,27 +1,42 @@
 {
 	"name": "__MSG_extName__",
 	"short_name": "fl+",
-	"version": "1.2.2",
+	"version": "2.0.0",
 	"manifest_version": 2,
+	"minimum_chrome_version": "40",
 	"homepage_url": "https://chrome.google.com/webstore/detail/fetlife+/damilhebpjeefbhjdhekjeddlkhfefej",
-	"author": "Robin Cloutman <rycochet@rycochet.com>",
+	"author": "Ryc O'Chet <rycochet@rycochet.com>",
+	"permissions": [
+		"alarms",
+		"cookies",
+		"notifications",
+		"storage",
+		"tabs",
+		"https://fetlife.com/"
+	],
 	"default_locale": "en",
 	"description": "__MSG_extName__",
 	"icons": {
 		"16": "icon16.png",
 		"48": "icon48.png",
-		"128": "icon128.png"},
+		"128": "icon128.png"
+	},
 	"options_page": "options.html",
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
 	"content_scripts": [
 		{
-			"js": ["jquery.min.js", "jquery.color.min.js", "common.js", "home_v4.js"],
+			"js": ["jquery.js", "jquery.color.js", "common.js", "home_v4.js"],
 			"matches": ["https://fetlife.com/home/v4*"]
 		}, {
-			"js": ["jquery.min.js", "common.js", "bookmarks.js", "navigation.js"],
+			"js": ["jquery.js", "common.js", "bookmarks.js", "navigation.js"],
+			"css": ["bookmarks.css"],
 			"run_at": "document_end",
 			"matches": ["https://fetlife.com/*"]
 		}, {
-			"js": ["jquery.min.js", "common.js", "kandp.js"],
+			"js": ["jquery.js", "common.js", "kandp.js"],
 			"run_at": "document_end",
 			"matches": ["https://fetlife.com/explore/*"]
 		}
@@ -32,16 +47,6 @@
 	},
 	"background": {
 		"persistent": true,
-		"scripts": ["jquery.min.js", "common.js", "background.js"]
-	},
-	"permissions": [
-		"alarms",
-		"cookies",
-		"notifications",
-		"storage",
-		"tabs",
-		"https://fetlife.com/"],
-	"web_accessible_resources": [
-		"icon48.png"
-	]
+		"scripts": ["jquery.js", "common.js", "background.js"]
+	}
 }

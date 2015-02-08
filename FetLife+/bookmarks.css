@@ -1,0 +1,10 @@
+
+#bookmark_list {
+	z-index: 10 !important;
+	width: 200px !important;
+}
+
+#bookmark_list a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

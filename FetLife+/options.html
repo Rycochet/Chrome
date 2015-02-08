@@ -1,78 +1,75 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title data-i18n="extName"></title>
-		<link rel="stylesheet" href="options.css">
-		<script type="text/javascript" src="jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="options.css">
+		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="i18n.js"></script>
 		<script type="text/javascript" src="common.js"></script>
 		<script type="text/javascript" src="options.js"></script>
 	</head>
 	<body>
-		<div>
-			<h1 data-i18n="extName"></h1>
-			<div data-i18n="optionsSettings"></div>
-		</div>
 
-		<div>
-			<h1 data-i18n="optionsSettings"></h1>
+		<section>
+			<h3 data-i18n="optionsBadge"></h3>
 
-			<section>
-				<h3 data-i18n="optionsBadge"></h3>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_updates">
+				<label for="opt_updates" data-i18n="optionsBadgeShowUpdate"></label>
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_messages">
+				<label for="opt_messages" data-i18n="optionsBadgeShowMessage"></label>
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_friends">
+				<label for="opt_friends" data-i18n="optionsBadgeShowFriends"></label>
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_ats">
+				<label for="opt_ats" data-i18n="optionsBadgeShowYou"></label>
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_colour">
+				<label for="opt_colour" data-i18n="optionsBadgeColour"></label>
+			</div>
+		</section>
 
-				<div>
-					<input type="checkbox" id="opt_updates">
-					<label for="opt_updates" data-i18n="optionsBadgeShowUpdate"></label>
-				</div>
-				<div>
-					<input type="checkbox" id="opt_messages">
-					<label for="opt_messages" data-i18n="optionsBadgeShowMessage"></label>
-				</div>
-				<div>
-					<input type="checkbox" id="opt_friends">
-					<label for="opt_friends" data-i18n="optionsBadgeShowFriends"></label>
-				</div>
-				<div>
-					<input type="checkbox" id="opt_ats">
-					<label for="opt_ats" data-i18n="optionsBadgeShowYou"></label>
-				</div>
-				<div>
-					<input type="checkbox" id="opt_colour">
-					<label for="opt_colour" data-i18n="optionsBadgeColour"></label>
-				</div>
-			</section>
+		<section>
+			<h3 data-i18n="optionsNotify"></h3>
 
-			<section>
-				<h3 data-i18n="optionsNotify"></h3>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_notify">
+				<label for="opt_notify" data-i18n="optionsNotifyPopup"></label>
+			</div>
+		</section>
 
-				<div>
-					<input type="checkbox" id="opt_notify">
-					<label for="opt_notify" data-i18n="optionsNotifyPopup"></label>
-				</div>
-			</section>
+		<section>
+			<h3 data-i18n="optionsKandP"></h3>
 
-			<section>
-				<h3 data-i18n="optionsKandP"></h3>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_kandp_width">
+				<label for="opt_kandp_width" data-i18n="optionsKandPWidth"></label>
+			</div>
+		</section>
 
-				<div>
-					<input type="checkbox" id="opt_kandp_width">
-					<label for="opt_kandp_width" data-i18n="optionsKandPWidth"></label>
-				</div>
-			</section>
+		<section>
+			<h3 data-i18n="optionsNavigation"></h3>
 
-			<section>
-				<h3 data-i18n="optionsNavigation"></h3>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_navigation">
+				<label for="opt_navigation" data-i18n="optionsNavigationGfx"></label>
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="opt_kandp">
+				<label for="opt_kandp" data-i18n="optionsNavigationKandP"></label>
+			</div>
+		</section>
 
-				<div>
-					<input type="checkbox" id="opt_navigation">
-					<label for="opt_navigation" data-i18n="optionsNavigationGfx"></label>
-				</div>
-				<div>
-					<input type="checkbox" id="opt_kandp">
-					<label for="opt_kandp" data-i18n="optionsNavigationKandP"></label>
-				</div>
-			</section>
-
-		</div>
+		<section id="buttons">
+			<input id="button_ok" type="submit" data-i18n="buttonOk" value="">
+            <input id="button_cancel" type="button" data-i18n="buttonCancel" value="">
+		</section>
 
 	</body>
 </html>

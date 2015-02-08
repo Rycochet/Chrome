@@ -1,0 +1,13 @@
+Improves the FetLife user interface.
+
+* Add a Badge showing notification counts.
+* Notification popups on messages etc.
+* Bookmark system within FetLife.
+* Highlight new feed items.
+* Hide feed types on a per-user basis.
+* Graphical navigation icons.
+* Fix K&P navigation bar.
+
+This is a work in progress, so will be updated over time, please report any bugs to fix and ideas for me to add...
+
+Please support FetLife too, which gives a full "gag" ability among other things (this will never replace that).

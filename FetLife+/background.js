@@ -29,35 +29,44 @@
 		}
 	};
 
-	fetlife.onChange = function() {
-		console.log("fetlife.onChange();");
-		var updates = parseInt(this.opt_updates ? this.updates : 0, 10),
-				total = (this.opt_messages ? this.messages : 0) + (this.opt_friends ? this.friends : 0) + (this.opt_ats ? this.ats : 0);
+	function onBackground() {
+//		console.log("fetlife.onChange();");
+		var updates = this.sync.updates ? this.local.updates || 0 : 0,
+				total = (this.sync.messages ? this.local.messages || 0 : 0)
+				+ (this.sync.friends ? this.local.friends || 0 : 0)
+				+ (this.sync.ats ? this.local.ats || 0 : 0);
+
 		this.setBadge(updates, total);
-		chrome.browserAction.setTitle({title: total ? ("Inbox: " + (this.messages || 0) + ", Friends: " + (this.friends || 0) + ", @You: " + (this.ats || 0)) : "No updates..."});
-		if (this.opt_colour) {
+		chrome.browserAction.setTitle({
+			title: total
+					? "Inbox: " + (this.local.messages || 0) + ", Friends: " + (this.local.friends || 0) + ", @You: " + (this.local.ats || 0)
+					: "No updates..."
+		});
+		if (this.sync.colour) {
 			chrome.browserAction.setBadgeBackgroundColor({color:
-						this.messages > 0 ? "#FF0000" // red
-						: this.friends > 0 ? "#FF00FF" // purple
+						this.local.messages > 0 ? "#FF0000" // red
+						: this.local.friends > 0 ? "#FF00FF" // purple
 						: "#00FF00"}); // green
 		}
-	};
+	}
 
-	$(document).on("sync local", fetlife.onChange.bind(fetlife));
+	fetlife.onSync(onBackground);
+	fetlife.onLocal(onBackground);
 
 	fetlife.getCounts = function() {
 		$.get("https://fetlife.com/polling/counts?fetch=friendship_requests%2Cnew_messages%2Cats", function(counts) {
-			console.log("FetLife.getCounts();", counts);
+//			console.log("FetLife.getCounts();", counts);
 			var friends = parseInt(counts.friendship_requests, 10),
 					messages = parseInt(counts.new_messages, 10),
 					ats = parseInt(counts.ats, 10);
-			notify("Friendship Requests", friends - fetlife.friends, "friendship request");
-			notify("Inbox", messages - fetlife.messages, "unread message");
-			notify("@You", ats - fetlife.ats, "@You update");
-			fetlife.set({
-				"friends": friends,
-				"messages": messages,
-				"ats": ats
+
+			notify("Friendship Requests", friends - fetlife.local.friends, "friendship request");
+			notify("Inbox", messages - fetlife.local.messages, "unread message");
+			notify("@You", ats - fetlife.local.ats, "@You update");
+			chrome.storage.local.set({
+				friends: friends,
+				messages: messages,
+				ats: ats
 			});
 		});
 	};
@@ -72,13 +81,13 @@
 		 stale: null
 		 stories: []
 		 */
-		$.get("https://fetlife.com" + (this.marker ? "/polling/home/new_stories_v4?subfeed=everything&marker=" + this.marker : "https://fetlife.com/home/v4_stories.json?subfeed=everything"), function(reply) {
-			console.log("FetLife.getNews();");
-			fetlife.set({
+		$.get("https://fetlife.com" + (this.local.marker ? "/polling/home/new_stories_v4?subfeed=everything&marker=" + this.local.marker : "https://fetlife.com/home/v4_stories.json?subfeed=everything"), function(reply) {
+//			console.log("FetLife.getNews();");
+			chrome.storage.local.set({
 				marker: reply.marker_head,
 				stories: reply.no_more_stories ? reply.stories : [],
 				updates: reply.no_more_stories ? reply.stories.length : 0
-			}, "local");
+			});
 		});
 	};
 
@@ -87,15 +96,13 @@
 	}
 
 	function notify(title, count, content, url) {
-		chrome.storage.sync.get("opt_notify", function(options) {
-			if (!options.opt_notify && count > 0) {
-				var notification = webkitNotifications.createNotification("icon48.png", title, "You have " + count + " new " + content + plural(count) + "...");
-				notification.show();
-				window.setTimeout(function() {
-					notification.cancel();
-				}, 10000);
-			}
-		});
+		if (fetlife.sync.notify && count > 0) {
+			var notification = webkitNotifications.createNotification("icon48.png", title, "You have " + count + " new " + content + plural(count) + "...");
+			notification.show();
+			window.setTimeout(function() {
+				notification.cancel();
+			}, 10000);
+		}
 	}
 
 	function checkLogin(onAlarm) {
@@ -104,42 +111,25 @@
 				fetlife.setBadge(-1, -1);
 			} else {
 				fetlife.getCounts();
-//			fetlife.getNews();
+//				fetlife.getNews();
 			}
 		});
 	}
 
 	function isFeedShown() {
 //	console.log("isFeedShown();");
-		chrome.tabs.query({url: "https://fetlife.com/home/v4*"}, function(tabs) {
+		chrome.tabs.query({url: "https://fetlife.com/home/v4*", status: "complete"}, function(tabs) {
 			if (!tabs.length) {
 				chrome.storage.local.set({updates: 0});
 			}
 		});
 	}
 
-	chrome.runtime.onInstalled.addListener(function() {
-		console.log("onInstalled();");
-		chrome.storage.local.set({updates: 0, marker_head: null /*, friends: 0, messages: 0, ats: 0*/});
-		checkLogin();
-	});
+	chrome.runtime.onInstalled.addListener(checkLogin);
 
-	chrome.runtime.onStartup.addListener(function() {
-		console.log("onStartup();");
-		isFeedShown();
-	});
-
-	chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
-//		console.log("onRemoved(" + tabId + ", " + JSON.stringify(removeInfo) + ");");
-		isFeedShown();
-	});
-
-	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-		if (changeInfo.status === "complete") {
-//		console.log("onUpdated(" + tabId + ", " + JSON.stringify(changeInfo) + ", " + JSON.stringify(tab) + ");");
-			isFeedShown();
-		}
-	});
+	chrome.runtime.onStartup.addListener(isFeedShown);
+	chrome.tabs.onRemoved.addListener(isFeedShown);
+	chrome.tabs.onUpdated.addListener(isFeedShown);
 
 	/*
 	 chrome.webRequest.onCompleted.addListener(function(details) {
@@ -149,7 +139,7 @@
 
 	chrome.alarms.onAlarm.addListener(function(alarm) {
 		if (alarm.name === "counts") {
-			console.log("onAlarm();");
+//			console.log("onAlarm();");
 			checkLogin();
 		}
 	});

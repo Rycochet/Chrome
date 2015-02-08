@@ -58,5 +58,13 @@
 	},
 	"optionsHideOptions": {
 		"message": "Hide options link"
+	},
+	"buttonOk": {
+		"message": "OK",
+		"description": "Button on options page."
+	},
+	"buttonCancel": {
+		"message": "Cancel",
+		"description": "Button on options page."
 	}
 }

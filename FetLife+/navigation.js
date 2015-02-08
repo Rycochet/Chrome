@@ -1,5 +1,3 @@
-/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
-/*global chrome, jQuery, fetlife */
 /*
  * FetLife+ - All pages
  * --------
@@ -12,42 +10,37 @@
  * TODO: User-editable menu items, perhaps link to bookmarks?
  */
 
-(function($, document) {
+(function($) {
 	"use strict";
 
-	var $shorter = $(),
-			$longer = $(),
-			$kandp = $(),
+	var $bar = $("#navigation_bar ul.sections, #header_v2 ul.sections"),
+			$shorter = $("li.shorter", $bar),
+			$longer = $("li.longer", $bar),
+			$kandp = $("li:first a", $bar),
 			picto = {
-				"/groups": "g",
-				"/places": "G",
-				"/events/all": "\\",
-				"/fetishes": "Y",
-				"/posts/everyone": "W",
-				"/videos/all": "V"
+				"groups": "g",
+				"places": "G",
+				"events": "\\",
+				"fetishes": "Y",
+				"posts": "W",
+				"videos": "V"
 			};
 
-	$(document).on("init", function() {
-		var $bar = $("#navigation_bar ul.sections, #header_v2 ul.sections");
-		$shorter = $("li.shorter", $bar);
-		$longer = $("li.longer", $bar);
-		$kandp = $("li:first a", $bar);
-
-		// Setup the picto icons, doesn't need to change again
-		$("a", $longer).each(function(i, el) {
-			var $el = $(el);
-			$el
-					.attr("title", $el.text())
-					.css("font-size", "1.5em")
-					.addClass("picto")
-					.text(picto[$el.attr("href")]);
-		});
+	// Setup the picto icons, doesn't need to change again
+	$("a", $longer).each(function() {
+		var $el = $(this);
+		$el
+				.attr("title", $el.text())
+				.css("font-size", "1.5em")
+				.addClass("picto")
+				.text(picto[$el.attr("href").replace(/^\/([^\/]*)\/?.*$/, "$1")]);
 	});
 
-	$(document).on("sync", function() {
-		console.log("fetlife.onChange()");
-		$shorter.toggle(!this.opt_navigation);
-		$longer.toggle(this.opt_navigation);
-		$kandp.toggle(this.opt_kandp);
-	}.bind(fetlife));
-}(jQuery, document));
+	function onNavigation() {
+		$shorter.toggle(!this.sync.navigation);
+		$longer.toggle(this.sync.navigation);
+		$kandp.toggle(this.sync.kandp);
+	}
+
+	fetlife.onSync(onNavigation);
+}(jQuery));
