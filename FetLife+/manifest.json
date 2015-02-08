@@ -1,7 +1,7 @@
 {
 	"name": "__MSG_extName__",
 	"short_name": "fl+",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"manifest_version": 2,
 	"minimum_chrome_version": "40",
 	"homepage_url": "https://chrome.google.com/webstore/detail/fetlife+/damilhebpjeefbhjdhekjeddlkhfefej",
@@ -47,6 +47,6 @@
 	},
 	"background": {
 		"persistent": true,
-		"scripts": ["jquery.js", "common.js", "background.js"]
+		"scripts": ["common.js", "background.js"]
 	}
 }

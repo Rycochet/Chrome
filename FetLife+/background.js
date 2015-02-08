@@ -1,14 +1,14 @@
-/*jslint browser: true, plusplus: true, regexp: true, white: true, unparam: true */
-/*global chrome, jQuery, fetlife */
+/*
+ * Main script, this controls injecting all other scripts (to ensure verions etc)
+ * Also controls FetLife icon including unread pm count...
+ */
 
-// Chrome FetLife icon including unread pm count...
-
-(function($, document, fetlife) {
+(function(window, chrome, sync, local) {
 	"use strict";
 
 	var timerId = 0, frame = 0, leftVal, rightVal;
 
-	fetlife.setBadge = function(left, right) {
+	function setBadge(left, right) {
 		if (left === -1 && right === -1) {
 			if (!timerId) {
 				timerId = window.setInterval(function() {
@@ -27,51 +27,57 @@
 			leftVal = left;
 			rightVal = right;
 		}
-	};
+	}
 
 	function onBackground() {
-//		console.log("fetlife.onChange();");
-		var updates = this.sync.updates ? this.local.updates || 0 : 0,
-				total = (this.sync.messages ? this.local.messages || 0 : 0)
-				+ (this.sync.friends ? this.local.friends || 0 : 0)
-				+ (this.sync.ats ? this.local.ats || 0 : 0);
+//		console.log("onBackground();");
+		var updates = sync.updates ? local.updates || 0 : 0,
+				total = (sync.messages ? local.messages || 0 : 0)
+				+ (sync.friends ? local.friends || 0 : 0)
+				+ (sync.ats ? local.ats || 0 : 0);
 
-		this.setBadge(updates, total);
+		setBadge(updates, total);
 		chrome.browserAction.setTitle({
 			title: total
-					? "Inbox: " + (this.local.messages || 0) + ", Friends: " + (this.local.friends || 0) + ", @You: " + (this.local.ats || 0)
+					? "Inbox: " + (local.messages || 0) + ", Friends: " + (local.friends || 0) + ", @You: " + (local.ats || 0)
 					: "No updates..."
 		});
-		if (this.sync.colour) {
+		if (sync.colour) {
 			chrome.browserAction.setBadgeBackgroundColor({color:
-						this.local.messages > 0 ? "#FF0000" // red
-						: this.local.friends > 0 ? "#FF00FF" // purple
+						local.messages > 0 ? "#FF0000" // red
+						: local.friends > 0 ? "#FF00FF" // purple
 						: "#00FF00"}); // green
 		}
 	}
 
-	fetlife.onSync(onBackground);
-	fetlife.onLocal(onBackground);
+	onSync(onBackground);
+	onLocal(onBackground);
 
-	fetlife.getCounts = function() {
-		$.get("https://fetlife.com/polling/counts?fetch=friendship_requests%2Cnew_messages%2Cats", function(counts) {
-//			console.log("FetLife.getCounts();", counts);
-			var friends = parseInt(counts.friendship_requests, 10),
-					messages = parseInt(counts.new_messages, 10),
-					ats = parseInt(counts.ats, 10);
+	function getCounts() {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://fetlife.com/polling/counts?fetch=friendship_requests%2Cnew_messages%2Cats", true);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				var counts = JSON.parse(xhr.responseText),
+						friends = parseInt(counts.friendship_requests, 10),
+						messages = parseInt(counts.new_messages, 10),
+						ats = parseInt(counts.ats, 10);
 
-			notify("Friendship Requests", friends - fetlife.local.friends, "friendship request");
-			notify("Inbox", messages - fetlife.local.messages, "unread message");
-			notify("@You", ats - fetlife.local.ats, "@You update");
-			chrome.storage.local.set({
-				friends: friends,
-				messages: messages,
-				ats: ats
-			});
-		});
-	};
+//				console.log("getCounts();", counts);
+				notify("Friendship Requests", friends - local.friends, "friendship request");
+				notify("Inbox", messages - local.messages, "unread message");
+				notify("@You", ats - local.ats, "@You update");
+				chrome.storage.local.set({
+					friends: friends,
+					messages: messages,
+					ats: ats
+				});
+			}
+		};
+		xhr.send();
+	}
 
-	fetlife.getNews = function() {
+	function getNews() {
 		// https://fetlife.com/polling/home/new_stories_v4?subfeed=everything + &marker=xyz
 		/*
 		 last_event_uuid: null
@@ -81,22 +87,28 @@
 		 stale: null
 		 stories: []
 		 */
-		$.get("https://fetlife.com" + (this.local.marker ? "/polling/home/new_stories_v4?subfeed=everything&marker=" + this.local.marker : "https://fetlife.com/home/v4_stories.json?subfeed=everything"), function(reply) {
-//			console.log("FetLife.getNews();");
-			chrome.storage.local.set({
-				marker: reply.marker_head,
-				stories: reply.no_more_stories ? reply.stories : [],
-				updates: reply.no_more_stories ? reply.stories.length : 0
-			});
-		});
-	};
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", local.marker ? "https://fetlife.com/polling/home/new_stories_v4?subfeed=everything&marker=" + local.marker : "https://fetlife.com/home/v4_stories.json?subfeed=everything", true);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				var reply = JSON.parse(xhr.responseText);
+//				console.log("getNews();", reply);
+				chrome.storage.local.set({
+					marker: reply.marker_head,
+					stories: reply.no_more_stories ? reply.stories : [],
+					updates: reply.no_more_stories ? reply.stories.length : 0
+				});
+			}
+		};
+		xhr.send();
+	}
 
 	function plural(n) {
 		return n === 1 ? "" : "s";
 	}
 
 	function notify(title, count, content, url) {
-		if (fetlife.sync.notify && count > 0) {
+		if (sync.notify && count > 0) {
 			var notification = webkitNotifications.createNotification("icon48.png", title, "You have " + count + " new " + content + plural(count) + "...");
 			notification.show();
 			window.setTimeout(function() {
@@ -108,10 +120,10 @@
 	function checkLogin(onAlarm) {
 		chrome.cookies.get({url: "https://fetlife.com/", name: "_fl_sessionid"}, function(cookie) {
 			if (!cookie) {
-				fetlife.setBadge(-1, -1);
+				setBadge(-1, -1);
 			} else {
-				fetlife.getCounts();
-//				fetlife.getNews();
+				getCounts();
+//				getNews();
 			}
 		});
 	}
@@ -146,4 +158,4 @@
 
 	chrome.alarms.create("counts", {periodInMinutes: 1});
 
-}(jQuery, document, fetlife));
+}(window, chrome, sync, local));

@@ -10,13 +10,13 @@
  * TODO: User-editable menu items, perhaps link to bookmarks?
  */
 
-(function($) {
+(function($, sync) {
 	"use strict";
 
 	var $bar = $("#navigation_bar ul.sections, #header_v2 ul.sections"),
-			$shorter = $("li.shorter", $bar),
-			$longer = $("li.longer", $bar),
-			$kandp = $("li:first a", $bar),
+			$shorter = $bar.find("li.shorter"),
+			$longer = $bar.find("li.longer"),
+			$kandp = $bar.find("li:first a"),
 			picto = {
 				"groups": "g",
 				"places": "G",
@@ -36,11 +36,10 @@
 				.text(picto[$el.attr("href").replace(/^\/([^\/]*)\/?.*$/, "$1")]);
 	});
 
-	function onNavigation() {
-		$shorter.toggle(!this.sync.navigation);
-		$longer.toggle(this.sync.navigation);
-		$kandp.toggle(this.sync.kandp);
-	}
+	onSync(function() {
+		$shorter.toggle(!sync.navigation);
+		$longer.toggle(sync.navigation);
+		$kandp.toggle(sync.kandp);
+	});
 
-	fetlife.onSync(onNavigation);
-}(jQuery));
+}(jQuery, sync));

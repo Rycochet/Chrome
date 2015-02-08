@@ -1,4 +1,4 @@
-/**
+/*
  * FetLife+ - All pages
  * --------
  * Add Bookmarks menu.
@@ -12,7 +12,7 @@
  *
  * TODO: Correct the FetLife coders on the spelling of "separate"... :-P
  */
-(function() {
+(function(document, chrome, sync) {
 	var allow = {
 		"v": new RegExp("/users/\\d+/pictures(|/\\d+)", "i"),
 		"V": new RegExp("/users/\\d+/videos(|/\\d+)", "i"),
@@ -51,9 +51,9 @@
 //			console.log("Add bookmark: " + document.location.pathname + " = " + title);
 			var data = {};
 			data[document.location.pathname] = title;
-			fetlife.sync.bookmarks.push(data);
+			sync.bookmarks.push(data);
 			chrome.storage.sync.set({
-				bookmarks: fetlife.sync.bookmarks
+				bookmarks: sync.bookmarks
 			});
 		}
 		return false;
@@ -62,11 +62,11 @@
 	function removeBookmark() {
 		if (confirm("Are you sure you wish to remove:\n\"" + getBookmark() + "\"?")) {
 //			console.log("Remove bookmark: " + document.location.pathname);
-			for (var i = 0; i < fetlife.sync.bookmarks.length; i++) {
-				if (fetlife.sync.bookmarks[i][document.location.pathname]) {
-					fetlife.sync.bookmarks.splice(i, 1);
+			for (var i = 0; i < sync.bookmarks.length; i++) {
+				if (sync.bookmarks[i][document.location.pathname]) {
+					sync.bookmarks.splice(i, 1);
 					chrome.storage.sync.set({
-						bookmarks: fetlife.sync.bookmarks
+						bookmarks: sync.bookmarks
 					});
 					break;
 				}
@@ -77,9 +77,9 @@
 
 	function getBookmark() {
 		var path = document.location.pathname;
-		for (var i = 0; i < fetlife.sync.bookmarks.length; i++) {
-			if (fetlife.sync.bookmarks[i][path]) {
-				return fetlife.sync.bookmarks[i][path];
+		for (var i = 0; i < sync.bookmarks.length; i++) {
+			if (sync.bookmarks[i][path]) {
+				return sync.bookmarks[i][path];
 			}
 		}
 		return null;
@@ -117,20 +117,21 @@
 			createChoice("#", "S", "Remove bookmark", true).click(removeBookmark);
 		} else if (canBookmark()) {
 			createChoice("#", "S", "Bookmark this page", true).click(addBookmark);
-		} else if (fetlife.sync.bookmarks.length === 0) {
+		} else if (sync.bookmarks.length === 0) {
 			createChoice("#", "d", "No bookmarks", true).click(function() {
 				return false;
 			});
 		}
-		for (var i = 0; i < fetlife.sync.bookmarks.length; i++) {
-			for (first in fetlife.sync.bookmarks[i]) {
-				if (fetlife.sync.bookmarks[i].hasOwnProperty(first) && typeof (first) !== "function") {
-					createChoice(first, getPicto(first), fetlife.sync.bookmarks[i][first], i === 0);
+		for (var i = 0; i < sync.bookmarks.length; i++) {
+			for (var first in sync.bookmarks[i]) {
+				if (sync.bookmarks[i].hasOwnProperty(first) && typeof (first) !== "function") {
+					createChoice(first, getPicto(first), sync.bookmarks[i][first], i === 0);
 					break;
 				}
 			}
 		}
 	}
 
-	fetlife.onSync(createList);
-}());
+	onSync(createList);
+
+}(document, chrome, sync));

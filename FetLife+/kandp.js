@@ -1,16 +1,15 @@
 /*
  * FetLife+ - Kinky & Popular
  * --------
- * Fixes to the K&P page
+ * Fixes to the K&P header
  */
 
-(function($, document) {
+(function($, sync) {
 	"use strict";
 
-	function KandP() {
-		$("#header_v2 > .flexible_container").css("width", (this.sync.kandp_width ? "950px" : ""));
-		$("#notification_counts").css("margin-right", (this.sync.kandp_width ? "25px" : ""));
-	}
+	onSync(function() {
+		$("#header_v2 > .flexible_container").css("width", (sync.kandp_width ? "950px" : ""));
+		$("#notification_counts").css("margin-right", (sync.kandp_width ? "25px" : ""));
+	});
 
-	fetlife.onSync(KandP);
-}(jQuery, document));
+}(jQuery, sync));

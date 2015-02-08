@@ -1,4 +1,4 @@
-(function($, document, window, chrome, fetlife) {
+(function($, document, window, chrome, globalSync) {
 	"use strict";
 
 	var sync = {};
@@ -30,15 +30,15 @@
 	 * Update local sync data
 	 */
 	function update() {
-		for (var index in fetlife.sync) {
-			sync[index] = fetlife.sync[index];
+		for (var index in globalSync) {
+			sync[index] = globalSync[index];
 			$("#opt_" + index)
 					.on("click", null, index, onClick)
 					.prop("checked", sync[index]);
 		}
 	}
 
-	fetlife.onSync(update);
+	onSync(update);
 
 	/**
 	 * Setup all click handlers and start the text update
@@ -48,4 +48,5 @@
 		$("#button_cancel").on("click", close);
 		update();
 	});
-}(jQuery, document, window, chrome, fetlife));
+
+}(jQuery, document, window, chrome, sync));

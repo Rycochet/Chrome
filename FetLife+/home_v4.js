@@ -5,27 +5,27 @@
  * Filter updates to hide user+type updates (but leave the entry there).
  * Notify background page of new updates.
  */
-(function(chrome, fetlife) {
+(function(chrome, sync) {
 	var isNewUpdates = false, // Set the first time we see feed updates
 			customizeFeedEnabled = /var\s+customizeFeedEnabled\s+=\s+true;/i.test($("body script").text());
 
 
 	function getHidden(user, story) {
-		if (fetlife.sync.users[story]) {
-			return fetlife.sync.users[story][user] === true;
+		if (sync.users[story]) {
+			return sync.users[story][user] === true;
 		}
 		return false;
 	}
 
 	function toggleHidden(user, story) {
-		if (fetlife.sync.users[story] && fetlife.sync.users[story][user]) {
-			delete fetlife.sync.users[story][user];
+		if (sync.users[story] && sync.users[story][user]) {
+			delete sync.users[story][user];
 		} else {
-			fetlife.sync.users[story] = fetlife.sync.users[story] || {};
-			fetlife.sync.users[story][user] = true;
+			sync.users[story] = sync.users[story] || {};
+			sync.users[story][user] = true;
 		}
 		chrome.storage.sync.set({
-			users: fetlife.sync.users
+			users: sync.users
 		});
 	}
 
@@ -64,19 +64,18 @@
 	}
 
 	getUpdates();
+
 	$("a.view_new span.knockout-bound").on("DOMSubtreeModified", getUpdates);
 
-	function updateAll() {
+	onSync(function() {
 		var story, user;
 
-		for (story in fetlife.sync.users) {
-			for (user in fetlife.sync.users[story]) {
+		for (story in sync.users) {
+			for (user in sync.users[story]) {
 				toggleStories("#stories", user, story);
 			}
 		}
-	}
-
-	fetlife.onSync(updateAll);
+	});
 
 	$("#stories").on("DOMNodeInserted", function(event) {
 		var $target = $(event.target), type;
@@ -130,4 +129,5 @@
 			toggleStories($target, user, story);
 		}
 	});
-}(chrome, fetlife));
+
+}(chrome, sync));
