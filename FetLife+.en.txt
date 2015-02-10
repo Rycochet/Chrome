@@ -7,6 +7,7 @@ Improves the FetLife user interface.
 * Hide feed types on a per-user basis.
 * Graphical navigation icons.
 * Fix K&P navigation bar.
+* Choose default target of the K&P link.
 
 This is a work in progress, so will be updated over time, please report any bugs to fix and ideas for me to add...
 
