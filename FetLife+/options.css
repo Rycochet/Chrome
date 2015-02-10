@@ -20,8 +20,17 @@ section + section {
 
 .info,
 .radio,
-.checkbox {
+.checkbox,
+.select {
 	padding: 0 18px;
+}
+
+.select > label {
+	padding-right: 2em;
+}
+
+.select > select {
+	min-width: 10em;
 }
 
 label {

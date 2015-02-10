@@ -11,9 +11,6 @@
 	"options": {
 		"message": "Options..."
 	},
-	"optionsSettings": {
-		"message": "Settings"
-	},
 	"optionsBadge": {
 		"message": "Badge"
 	},
@@ -43,6 +40,21 @@
 	},
 	"optionsKandPWidth": {
 		"message": "Fix K&amp;P navigation bar width"
+	},
+	"optionsKandPDefault": {
+		"message": "Default page:"
+	},
+	"optionsKandPEverything": {
+		"message": "Everything"
+	},
+	"optionsKandPPictures": {
+		"message": "Pictures"
+	},
+	"optionsKandPVideos": {
+		"message": "Videos"
+	},
+	"optionsKandPWritings": {
+		"message": "Writings"
 	},
 	"optionsNavigation": {
 		"message": "Navigation"

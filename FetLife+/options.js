@@ -27,15 +27,27 @@
 	}
 
 	/**
+	 * Select handler
+	 * @param {event} event
+	 */
+	function onSelect(event) {
+		console.log("on change", $(event.target).val())
+		sync[event.data] = $(event.target).val();
+	}
+
+	/**
 	 * Update local sync data
 	 */
 	function update() {
 		for (var index in globalSync) {
 			sync[index] = globalSync[index];
-			$("#opt_" + index)
+			$("input#opt_" + index)
 					.on("click", null, index, onClick)
 					.prop("checked", sync[index]);
 		}
+		$("#opt_kandp_default")
+				.on("change", null, "kandp_default", onSelect)
+				.val(sync.kandp_default);
 	}
 
 	onSync(update);

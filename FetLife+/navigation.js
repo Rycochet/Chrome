@@ -26,8 +26,16 @@
 				"videos": "V"
 			};
 
+	var txt = document.head.textContent;
+	if (txt && txt.length) {
+		chrome.storage.local.set({
+			username: txt.match(/FetLife\.currentUser\.nickname\s*=\s*"(.+)";/)[1] || "",
+			userid: parseInt(txt.match(/FetLife\.currentUser\.id\s*=\s*(\d+);/)[1], 10) || -1
+		});
+	}
+
 	// Setup the picto icons, doesn't need to change again
-	$("a", $longer).each(function() {
+	$longer.find("a").each(function() {
 		var $el = $(this);
 		$el
 				.attr("title", $el.text())
@@ -36,10 +44,13 @@
 				.text(picto[$el.attr("href").replace(/^\/([^\/]*)\/?.*$/, "$1")]);
 	});
 
+
 	onSync(function() {
 		$shorter.toggle(!sync.navigation);
 		$longer.toggle(sync.navigation);
-		$kandp.toggle(sync.kandp);
+		$kandp
+				.toggle(sync.kandp)
+				.attr("href", sync.kandp_default);
 	});
 
 }(jQuery, sync));

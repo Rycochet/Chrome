@@ -16,6 +16,7 @@
 		notify: true,
 		// Kinky & Popular
 		kandp_width: true,
+		kandp_default: "/explore/",
 		// Navigation
 		navigation: true,
 		kandp: true,
@@ -68,14 +69,6 @@
 			fn.call(this);
 		}
 	};
-
-	var txt = document.head.textContent;
-	if (txt && txt.length) {
-		chrome.storage.local.set({
-			username: txt.match(/FetLife\.currentUser\.nickname\s*=\s*"(.+)";/)[1] || "",
-			userid: parseInt(txt.match(/FetLife\.currentUser\.id\s*=\s*(\d+);/)[1], 10) || -1
-		});
-	}
 
 	chrome.storage.sync.get(null, function(data) {
 		for (var index in data) {
