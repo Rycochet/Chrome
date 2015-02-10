@@ -93,14 +93,22 @@
 				default:
 					return; // Some stories can"t really be hidden
 				case "like_created":
-					if ($(".story img", $target).length === 0) { // only hide picture likes
+					if (!$(".story img", $target).length) { // only hide picture likes
 						return;
 					}
+
 				case "picture_created":
 				case "comment_created":
 					type = "pictures";
 					break;
 
+				case "profile_updated":
+					type = "profile";
+					break;
+
+				case "post_created":
+				case "post_updated":
+				case "group_post_created":
 				case "wall_post_created":
 				case "status_created":
 				case "post_comment_created":
