@@ -12,18 +12,18 @@
  *
  * TODO: Correct the FetLife coders on the spelling of "separate"... :-P
  */
-(function(document, chrome, sync) {
+(function($, document, chrome, sync) {
 	var allow = {
-		"v": new RegExp("/users/\\d+/pictures(|/\\d+)", "i"),
-		"V": new RegExp("/users/\\d+/videos(|/\\d+)", "i"),
-		"W": new RegExp("/users/\\d+/posts(|/\\d+)", "i"),
-		"U": new RegExp("/users/\\d+", "i"),
-		"g": new RegExp("/groups/\\d+", "i"),
-		"\\": new RegExp("/events/\\d+", "i"),
-		"G": new RegExp("/administrative_areas(|/\\d+)", "i"),
-		"Y": new RegExp("/fetishes/\\d+", "i"),
-		"H": new RegExp("/home/v4", "i")
-//				"S": new RegExp(".*", "i")
+		"v": /^\/users\/\d+\/pictures(|\/\d+)/i,
+		"V": /^\/users\/\d+\/videos(|\/\d+)/i,
+		"W": /^\/users\/\d+\/posts(|\/\d+)/i,
+		"U": /^\/users\/\d+/i,
+		"g": /^\/groups\/\d+/i,
+		"\\": /^\/events\/\d+/i,
+		"G": /^\/administrative_areas(|\/\d+)/i,
+		"Y": /^\/fetishes\/\d+/i,
+		"H": /^\/home\/v4/i
+//		"S": /.*/i
 	};
 
 	$("form.global_search + #nav_dropdown").after(
@@ -134,4 +134,4 @@
 
 	onSync(createList);
 
-}(document, chrome, sync));
+}($, document, chrome, sync));
