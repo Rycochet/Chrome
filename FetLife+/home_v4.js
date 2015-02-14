@@ -5,7 +5,7 @@
  * Filter updates to hide user+type updates (but leave the entry there).
  * Notify background page of new updates.
  */
-(function(chrome, sync) {
+(function($, chrome, sync) {
 	var isNewUpdates = false, // Set the first time we see feed updates
 			customizeFeedEnabled = /var\s+customizeFeedEnabled\s+=\s+true;/i.test($("body script").text());
 
@@ -138,4 +138,4 @@
 		}
 	});
 
-}(chrome, sync));
+}($, chrome, sync));
