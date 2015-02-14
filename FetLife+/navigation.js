@@ -10,10 +10,11 @@
  * TODO: User-editable menu items, perhaps link to bookmarks?
  */
 
-(function($, sync) {
+(function($, document, window, chrome, sync) {
 	"use strict";
 
-	var $bar = $("#navigation_bar ul.sections, #header_v2 ul.sections"),
+	var isKandP = /^\/explore\//.test(window.location.pathname),
+			$bar = $("#navigation_bar ul.sections, #header_v2 ul.sections"),
 			$shorter = $bar.find("li.shorter"),
 			$longer = $bar.find("li.longer"),
 			$kandp = $bar.find("li:first a"),
@@ -44,8 +45,11 @@
 				.text(picto[$el.attr("href").replace(/^\/([^\/]*)\/?.*$/, "$1")]);
 	});
 
-
 	onSync(function() {
+		if (isKandP) {
+			$("#header_v2 > .flexible_container").css("width", (sync.kandp_width ? "950px" : ""));
+			$("#notification_counts").css("margin-right", (sync.kandp_width ? "25px" : ""));
+		}
 		$shorter.toggle(!sync.navigation);
 		$longer.toggle(sync.navigation);
 		$kandp
@@ -53,4 +57,4 @@
 				.attr("href", sync.kandp_default);
 	});
 
-}(jQuery, sync));
+}(jQuery, document, window, chrome, sync));
