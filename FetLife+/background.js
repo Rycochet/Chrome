@@ -8,6 +8,9 @@
 
 	var timerId = 0, frame = 0, leftVal, rightVal;
 
+	function noop() {
+	}
+
 	function setBadge(left, right) {
 		if (left === -1 && right === -1) {
 			if (!timerId) {
@@ -63,10 +66,9 @@
 						messages = parseInt(counts.new_messages, 10),
 						ats = parseInt(counts.ats, 10);
 
-//				console.log("getCounts();", counts);
-				notify("Friendship Requests", friends - local.friends, "friendship request");
-				notify("Inbox", messages - local.messages, "unread message");
-				notify("@You", ats - local.ats, "@You update");
+				notify("Friendship Requests", friends - local.friends, "friendship request", "https://fetlife.com/requests");
+				notify("Inbox", messages - local.messages, "unread message", "https://fetlife.com/conversations");
+				notify("@You", ats - local.ats, "@You update", "https://fetlife.com/ats");
 				chrome.storage.local.set({
 					friends: friends,
 					messages: messages,
@@ -109,12 +111,36 @@
 
 	function notify(title, count, content, url) {
 		if (sync.notify && count > 0) {
-			var notification = webkitNotifications.createNotification("icon48.png", title, "You have " + count + " new " + content + plural(count) + "...");
-			notification.show();
-			window.setTimeout(function() {
-				notification.cancel();
-			}, 10000);
+			closeNotification(url);
+			chrome.notifications.create(url, {
+				type: "basic",
+				iconUrl: "icon48.png",
+				title: title,
+				buttons: [{
+						iconUrl: "icon48.png",
+						title: "Open in Browser..."
+					}],
+				message: "You have " + count + " new " + content + plural(count) + "..."
+			}, noop);
 		}
+	}
+
+	function closeNotification(notificationId) {
+		chrome.notifications.clear(notificationId, noop);
+	}
+
+	function clickNotification(notificationId) {
+		chrome.tabs.query({url: notificationId, status: "complete"}, function(tabs) {
+			closeNotification(notificationId);
+			if (tabs.length) {
+				chrome.tabs.update(tabs[0].id, {active: true});
+			} else {
+				chrome.tabs.create({
+					url: notificationId,
+					active: true
+				});
+			}
+		});
 	}
 
 	function checkLogin(onAlarm) {
@@ -129,7 +155,6 @@
 	}
 
 	function isFeedShown() {
-//	console.log("isFeedShown();");
 		chrome.tabs.query({url: "https://fetlife.com/home/v4*", status: "complete"}, function(tabs) {
 			if (!tabs.length) {
 				chrome.storage.local.set({updates: 0});
@@ -137,21 +162,17 @@
 		});
 	}
 
+	chrome.notifications.onClicked.addListener(closeNotification);
+	chrome.notifications.onButtonClicked.addListener(clickNotification);
+
 	chrome.runtime.onInstalled.addListener(checkLogin);
 
 	chrome.runtime.onStartup.addListener(isFeedShown);
 	chrome.tabs.onRemoved.addListener(isFeedShown);
 	chrome.tabs.onUpdated.addListener(isFeedShown);
 
-	/*
-	 chrome.webRequest.onCompleted.addListener(function(details) {
-	 console.log(details);
-	 }, {urls: ["https://fetlife.com/polling/home/new_stories_v4*"]});
-	 */
-
 	chrome.alarms.onAlarm.addListener(function(alarm) {
 		if (alarm.name === "counts") {
-//			console.log("onAlarm();");
 			checkLogin();
 		}
 	});
