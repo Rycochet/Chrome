@@ -31,8 +31,15 @@
 	 * @param {event} event
 	 */
 	function onSelect(event) {
-		console.log("on change", $(event.target).val())
+//		console.log("on change", $(event.target).val())
 		sync[event.data] = $(event.target).val();
+	}
+
+	/**
+	 * Toggle the menu / toggle item and hide the menu section if needed
+	 */
+	function toggleMenu() {
+		sync.toggle = !$("#opt_toggle").prop("checked");
 	}
 
 	/**
@@ -41,10 +48,16 @@
 	function update() {
 		for (var index in globalSync) {
 			sync[index] = globalSync[index];
-			$("input#opt_" + index)
+			$("input[checkbox]#opt_" + index)
 					.on("click", null, index, onClick)
 					.prop("checked", sync[index]);
 		}
+		$("#opt_toggle")
+				.on("change", toggleMenu)
+				.prop("checked", !sync.toggle);
+		$("#opt_toggle2")
+				.on("change", toggleMenu)
+				.prop("checked", sync.toggle);
 		$("#opt_kandp_default")
 				.on("change", null, "kandp_default", onSelect)
 				.val(sync.kandp_default);

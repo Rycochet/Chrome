@@ -14,6 +14,22 @@
 	"optionsBadge": {
 		"message": "Badge"
 	},
+	"optionsBadgeDescription": {
+		"message": "On clicking the badge",
+		"description": "Info text on options page."
+	},
+	"optionsBadgeMenu": {
+		"message": "Show menu",
+		"description": "Radio button on options page."
+	},
+	"optionsBadgeToggle": {
+		"message": "Open a Fetlife tab",
+		"description": "Radio button on options page."
+	},
+	"optionsBadgeTextDescription": {
+		"message": "Text on the badge",
+		"description": "Info text on options page."
+	},
 	"optionsBadgeShowUpdate": {
 		"message": "Show updates count (when a Main Feed tab is open)"
 	},
@@ -78,5 +94,38 @@
 	"buttonCancel": {
 		"message": "Cancel",
 		"description": "Button on options page."
+	},
+	"homeButton": {
+		"message": "Home"
+	},
+	"inboxButton": {
+		"message": "Inbox ($1)"
+	},
+	"friendshipButton": {
+		"message": "Friendship Requests ($1)"
+	},
+	"atYouButton": {
+		"message": "@You ($1)"
+	},
+	"kandpButton": {
+		"message": "Kinky&Popular"
+	},
+	"groupsButton": {
+		"message": "Groups"
+	},
+	"placesButton": {
+		"message": "Places"
+	},
+	"eventsButton": {
+		"message": "Events"
+	},
+	"fetishesButton": {
+		"message": "Fetishes"
+	},
+	"writingButton": {
+		"message": "Writings"
+	},
+	"videosButton": {
+		"message": "Videos"
 	}
 }

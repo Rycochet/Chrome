@@ -10,6 +10,7 @@ section > div[data-i18n] {
 }
 
 section > div[data-i18n] {
+	margin-top: 5px;
 	margin-bottom: 5px;
 }
 

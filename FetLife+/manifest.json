@@ -15,7 +15,7 @@
 		"https://fetlife.com/"
 	],
 	"default_locale": "en",
-	"description": "__MSG_extName__",
+	"description": "__MSG_extDescription__",
 	"icons": {
 		"16": "icon16.png",
 		"48": "icon48.png",

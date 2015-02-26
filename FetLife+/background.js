@@ -45,6 +45,7 @@
 					? "Inbox: " + (local.messages || 0) + ", Friends: " + (local.friends || 0) + ", @You: " + (local.ats || 0)
 					: "No updates..."
 		});
+		chrome.browserAction.setPopup({popup: sync.toggle ? "" : "popup.html"});
 		if (sync.colour) {
 			chrome.browserAction.setBadgeBackgroundColor({color:
 						local.messages > 0 ? "#FF0000" // red
@@ -129,7 +130,7 @@
 		chrome.notifications.clear(notificationId, noop);
 	}
 
-	function clickNotification(notificationId) {
+	function openOrActivateTab(notificationId) {
 		chrome.tabs.query({url: notificationId, status: "complete"}, function(tabs) {
 			closeNotification(notificationId);
 			if (tabs.length) {
@@ -162,8 +163,10 @@
 		});
 	}
 
+	chrome.browserAction.onClicked.addListener(openOrActivateTab.bind(null, "https://fetlife.com/home/v4"));
+
 	chrome.notifications.onClicked.addListener(closeNotification);
-	chrome.notifications.onButtonClicked.addListener(clickNotification);
+	chrome.notifications.onButtonClicked.addListener(openOrActivateTab);
 
 	chrome.runtime.onInstalled.addListener(checkLogin);
 
