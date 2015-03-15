@@ -87,6 +87,21 @@
 	"optionsHideOptions": {
 		"message": "Hide options link"
 	},
+	"optionsBlocked": {
+		"message": "Blocked Users"
+	},
+	"optionsBlockedBehaviour": {
+		"message": "Behaviour"
+	},
+	"optionsBlockedDefault": {
+		"message": "Fetlife default"
+	},
+	"optionsBlockedReplace": {
+		"message": "Replace with \"Blocked\""
+	},
+	"optionsBlockedHide": {
+		"message": "Hide completely"
+	},
 	"buttonOk": {
 		"message": "OK",
 		"description": "Button on options page."
@@ -127,5 +142,9 @@
 	},
 	"videosButton": {
 		"message": "Videos"
+	},
+	"blockedText": {
+		"message": "Blocked",
+		"description": "Used on various pages to replace content from someone who is blocked"
 	}
 }

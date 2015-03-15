@@ -61,6 +61,9 @@
 		$("#opt_kandp_default")
 				.on("change", null, "kandp_default", onSelect)
 				.val(sync.kandp_default);
+		$("#opt_blocked_action")
+				.on("change", null, "block_action", onSelect)
+				.val(sync.block_action);
 	}
 
 	onSync(update);

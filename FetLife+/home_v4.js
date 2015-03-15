@@ -9,7 +9,6 @@
 	var isNewUpdates = false, // Set the first time we see feed updates
 			customizeFeedEnabled = /var\s+customizeFeedEnabled\s+=\s+true;/i.test($("body script").text());
 
-
 	function getHidden(user, story) {
 		if (sync.users[story]) {
 			return sync.users[story][user] === true;
@@ -78,7 +77,9 @@
 	});
 
 	$("#stories").on("DOMNodeInserted", function(event) {
-		var $target = $(event.target), type;
+		var type,
+				$target = $(event.target);
+
 		if ($target.is("tr")) {
 			if (isNewUpdates) {
 				$target.css({
@@ -89,6 +90,29 @@
 					$target.css({backgroundColor: ""});
 				});
 			}
+
+			var replace = sync.block_action === "replace",
+					hide = sync.block_action === "hide",
+					blockedText = chrome.i18n.getMessage("blockedText");
+
+			if (hide || replace) {
+				$target.find("a[href^='/users/']").each(function() {
+					var user = $(this).attr("href").match(/[0-9]+/)[0],
+							isBlocked = !!sync.blocked[user];
+
+					if (isBlocked) {
+						if (hide) {
+							$target.toggle(!isBlocked);
+						} else {
+							$target.find(".story").children().toggle(!isBlocked);
+							$("<a style=\"cursor:pointer;\"><em>" + blockedText + "</em></a>").prependTo($target.find(".story")).on("click", function() {
+								$(this).nextAll().toggle();
+							});
+						}
+					}
+				});
+			}
+
 			switch ($target.attr("class")) {
 				default:
 					return; // Some stories can"t really be hidden
@@ -117,10 +141,10 @@
 					break;
 			}
 
-			var $user = $(".user a", $target);
-			var username = $("img", $user).attr("title");
-			var user = $user.attr("href").replace("/users/", "");
-			var story = $target.attr("class");
+			var $user = $(".user a", $target),
+					username = $("img", $user).attr("title"),
+					user = $user.attr("href").replace("/users/", ""),
+					story = $target.attr("class");
 
 			// Add option toggle
 			var $option = $("<a href=\"#hideByStory\" class=\"fetfix_" + user + "_" + story + " story_options\" style=\"text-decoration:none;\"><span>Hide</span> " + $target.attr("class") + " content by " + username + "</a>")

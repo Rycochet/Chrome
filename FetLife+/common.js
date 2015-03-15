@@ -23,7 +23,10 @@
 		// Bookmarks
 		bookmarks: [],
 		// Feed
-		users: {}
+		users: {},
+		// Blocked users
+		block_action: "",
+		blocked: {}
 	};
 
 	window.local = {
@@ -39,22 +42,10 @@
 		stories: []
 	};
 
-	{ // TODO: update storage, remove in a few weeks
-		var save = false;
-		for (var index in sync) {
-			if (sync.hasOwnProperty(index) && localStorage["opt_" + index] !== undefined) {
-				sync[index] = localStorage["opt_" + index];
-				delete localStorage["opt_" + index];
-			}
-		}
-		if (save) {
-			chrome.storage.sync.set(sync);
-		}
-	}
-
 	var loaded = false,
 			onSyncList = [],
-			onLocalList = [];
+			onLocalList = [],
+			onLoadedList = [];
 
 	window.onSync = function(fn) {
 		onSyncList.push(fn);
@@ -65,6 +56,13 @@
 
 	window.onLocal = function(fn) {
 		onLocalList.push(fn);
+		if (loaded) {
+			fn.call(this);
+		}
+	};
+
+	window.onLoaded = function(fn) {
+		onLoadedList.push(fn);
 		if (loaded) {
 			fn.call(this);
 		}
@@ -85,20 +83,21 @@
 			onLocalList.forEach(function(fn) {
 				fn();
 			});
+			onLoadedList.forEach(function(fn) {
+				fn();
+			});
 		});
 	});
 
 	chrome.storage.onChanged.addListener(function(changes, areaName) {
-		var isSync = areaName === "sync",
-				storage = isSync ? sync : local,
-				fnList = isSync ? onSyncList : onLocalList;
-
-		for (var i in changes) {
-			storage[i] = changes[i].newValue;
+		if (areaName === "sync" || areaName === "local") {
+			for (var i in changes) {
+				window[areaName][i] = changes[i].newValue;
+			}
+			(areaName === "sync" ? onSyncList : onLocalList).forEach(function(fn) {
+				fn();
+			});
 		}
-		fnList.forEach(function(fn) {
-			fn();
-		});
 	});
 
 }(window, chrome));

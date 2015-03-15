@@ -36,6 +36,17 @@
 			"js": ["jquery.color.js", "home_v4.js"],
 			"run_at": "document_end",
 			"matches": ["https://fetlife.com/home/v4*"]
+		}, {
+			"js": ["users.js"],
+			"run_at": "document_end",
+			"matches": ["https://fetlife.com/users/*"]
+		}, {
+			"js": ["comment.js"],
+			"run_at": "document_end",
+			"matches": [
+				"https://fetlife.com/groups/*/group_posts/*",
+				"https://fetlife.com/users/*"
+			]
 		}
 	],
 	"browser_action": {
