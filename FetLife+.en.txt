@@ -1,5 +1,7 @@
 Improves the FetLife user interface.
 
+FetLife+ group - https://fetlife.com/groups/116814 - no need to join or post.
+
 * Add a Badge showing notification counts.
 * Notification popups on messages etc.
 * Bookmark system within FetLife.
