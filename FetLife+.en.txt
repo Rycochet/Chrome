@@ -8,6 +8,7 @@ Improves the FetLife user interface.
 * Graphical navigation icons.
 * Fix K&P navigation bar.
 * Choose default target of the K&P link.
+* Ability to block all content relating to blocked users.
 
 This is a work in progress, so will be updated over time, please report any bugs to fix and ideas for me to add...
 
