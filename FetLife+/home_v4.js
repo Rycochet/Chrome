@@ -104,10 +104,13 @@
 						if (hide) {
 							$target.toggle(!isBlocked);
 						} else {
-							$target.find(".story").children().toggle(!isBlocked);
-							$("<a style=\"cursor:pointer;\"><em>" + blockedText + "</em></a>").prependTo($target.find(".story")).on("click", function() {
-								$(this).nextAll().toggle();
-							});
+							var $story = $target.find(".story");
+							if (!$story.children("a").length) {
+								$story.children().toggle(!isBlocked);
+								$("<a style=\"cursor:pointer;\"><em>" + blockedText + "</em></a>").prependTo($story).on("click", function() {
+									$(this).nextAll().toggle();
+								});
+							}
 						}
 					}
 				});

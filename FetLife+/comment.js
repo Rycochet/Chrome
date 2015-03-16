@@ -19,10 +19,12 @@
 					if (hide) {
 						$this.toggle(!isBlocked);
 					} else {
-						$this.children().toggle(!isBlocked);
-						$("<a style=\"cursor:pointer;\"><em>" + blockedText + "</em></a>").prependTo(this).on("click", function() {
-							$(this).nextAll().toggle();
-						});
+						if (!$this.children("a").length) {
+							$this.children().toggle(!isBlocked);
+							$("<a style=\"cursor:pointer;\"><em>" + blockedText + "</em></a>").prependTo(this).on("click", function() {
+								$(this).nextAll().toggle();
+							});
+						}
 					}
 				}
 			});
