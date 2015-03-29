@@ -17,6 +17,8 @@
 		// Kinky & Popular
 		kandp_width: true,
 		kandp_default: "/explore/",
+		// Main Feed
+		feed_default: "/home",
 		// Navigation
 		navigation: true,
 		kandp: true,

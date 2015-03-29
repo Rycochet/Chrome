@@ -2,6 +2,8 @@ Improves the FetLife user interface.
 
 FetLife+ group - https://fetlife.com/groups/116814 - no need to join or post.
 
+All features have options to control them, use only what you want!
+
 * Add a Badge showing notification counts.
 * Notification popups on messages etc.
 * Bookmark system within FetLife.
@@ -10,7 +12,8 @@ FetLife+ group - https://fetlife.com/groups/116814 - no need to join or post.
 * Graphical navigation icons.
 * Fix K&P navigation bar.
 * Choose default target of the K&P link.
-* Ability to block all content relating to blocked users.
+* Choose default target of the Main Feed link.
+* Block all content relating to blocked users (including comments and mentions).
 
 This is a work in progress, so will be updated over time, please report any bugs to fix and ideas for me to add...
 

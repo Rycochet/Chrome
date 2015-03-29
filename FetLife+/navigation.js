@@ -14,10 +14,12 @@
 	"use strict";
 
 	var isKandP = /^\/explore\//.test(window.location.pathname),
-			$bar = $("#navigation_bar ul.sections, #header_v2 ul.sections"),
+			$header = $("#navigation_bar,#header_v2"),
+			$bar = $header.find("#ul.sections"),
 			$shorter = $bar.find("li.shorter"),
 			$longer = $bar.find("li.longer"),
 			$kandp = $bar.find("li:first a"),
+			$feed = $header.find("h1 a"),
 			picto = {
 				"groups": "g",
 				"places": "G",
@@ -52,6 +54,7 @@
 		}
 		$shorter.toggle(!sync.navigation);
 		$longer.toggle(sync.navigation);
+		$feed.attr("href", sync.feed_default);
 		$kandp
 				.toggle(sync.kandp)
 				.attr("href", sync.kandp_default);

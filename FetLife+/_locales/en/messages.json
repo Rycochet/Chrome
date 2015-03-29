@@ -72,6 +72,30 @@
 	"optionsKandPWritings": {
 		"message": "Writings"
 	},
+	"optionsMainFeed": {
+		"message": "Main Feed"
+	},
+	"optionsMainFeedDefault": {
+		"message": "Default page:"
+	},
+	"optionsMainFeedEverything": {
+		"message": "Everything"
+	},
+	"optionsMainFeedGroups": {
+		"message": "Group Activity"
+	},
+	"optionsMainFeedStatuses": {
+		"message": "Status Updates"
+	},
+	"optionsMainFeedWritings": {
+		"message": "Writing"
+	},
+	"optionsMainFeedPictures": {
+		"message": "Pictures"
+	},
+	"optionsMainFeedVideos": {
+		"message": "Videos"
+	},
 	"optionsNavigation": {
 		"message": "Navigation"
 	},
