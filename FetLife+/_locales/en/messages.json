@@ -72,6 +72,18 @@
 	"optionsKandPWritings": {
 		"message": "Writings"
 	},
+	"optionsTheme": {
+		"message": "Theme"
+	},
+	"optionsThemeDefault": {
+		"message": "Use theme:"
+	},
+	"optionsThemeNone": {
+		"message": "None"
+	},
+	"optionsThemeLight": {
+		"message": "Light"
+	},
 	"optionsMainFeed": {
 		"message": "Main Feed"
 	},

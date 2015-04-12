@@ -14,6 +14,7 @@ All features have options to control them, use only what you want!
 * Choose default target of the K&P link.
 * Choose default target of the Main Feed link.
 * Block all content relating to blocked users (including comments and mentions).
+* Themes (well, a single bad one - please help out, I'm bad at that part!!)
 
 This is a work in progress, so will be updated over time, please report any bugs to fix and ideas for me to add...
 

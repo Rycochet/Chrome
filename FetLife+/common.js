@@ -28,7 +28,9 @@
 		users: {},
 		// Blocked users
 		block_action: "",
-		blocked: {}
+		blocked: {},
+		// Theme
+		theme: ""
 	};
 
 	window.local = {

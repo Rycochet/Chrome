@@ -1,0 +1,280 @@
+/*
+ * Standard CSS file, quick and dirty - should really use scss and do it properly
+ */
+
+body {
+	background: #DDD;
+	color: #1B1B1B;
+}
+
+a {
+	color: #1B1B1B;
+}
+
+a:focus,
+a:hover {
+	color: #000;
+	background-color: #FFF;
+}
+
+fieldset {
+	background-color: #CCC;
+}
+
+h1, .h1 {
+	color: #D00;
+	text-shadow: #CCC 0px -1px 0px;
+}
+
+h5, .h5 {
+	color: #555;
+}
+
+nav.hl li a {
+	color: #333;
+}
+
+nav.hl .selected {
+	background-color: #AAA;
+}
+
+nav.hl li a:hover {
+	background-color: #CCC;
+}
+
+form.open p, .closed p, form.one_size p {
+	background-color: #A7A7A7;
+}
+
+form.closed textarea {
+	color: #444;
+}
+
+form.open textarea {
+	color: #333;
+}
+
+.countdown {
+	background-color: #CCC;
+}
+
+kbd {
+	text-shadow: #DDD 1px 1px 0;
+	background-color: #AAA;
+}
+
+input, textarea, keygen, select, button {
+	color: #222;
+}
+
+input[type=text], textarea {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.12, #999));
+}
+
+aside p, aside blockquote, aside li, aside li a {
+	color: #222;
+}
+
+#header_v2,
+#navigation_bar {
+	background-color: #CCC;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#CCC));
+	color: #000;
+}
+
+#header_v2 a,
+#navigation_bar a {
+	color: #111;
+}
+
+#header_v2 h1 .picto,
+#navigation_bar h1 .picto {
+	color: #111;
+}
+
+#header_v2 ul.profile li a:hover,
+#header_v2 ul.profile a.open,
+#navigation_bar ul.profile li a:hover,
+#navigation_bar ul.profile a.open {
+	background-color: #DDD;
+}
+
+#header_v2 ul.profile ul,
+#navigation_bar ul.profile ul {
+	background-color: #DDD;
+	box-shadow: 2px 2px 4px #CCC;
+}
+
+#header_v2 ul.profile ul li a:hover,
+#navigation_bar ul.profile ul li a:hover {
+	color: #000;
+	background-color: #7CC;
+}
+
+.icomment {
+	background-color: #AAA;
+	border-top: 1px solid #2A2A2A;
+}
+
+.kpbox .op {
+	background-color: #C7C7C7;
+}
+
+.kpbox .comments {
+	background-color: #BBB;
+}
+
+.cAAA, .cAAA a {
+	color: #222;
+}
+
+.support_cta_container .support_cta {
+	background-color: #CCC;
+}
+
+.h2_v2 {
+	text-shadow: 0 -1px 0 #000;
+}
+
+.support_cta_container {
+	background: transparent;
+	background: -webkit-linear-gradient(top, rgba(159,159,159,0) 0%, rgba(159,159,159,1) 40%);
+}
+
+#footer {
+	background-color: #AAA;
+}
+
+ul.group_listings li a.group_listing {
+	background-color: #BBB;
+}
+
+ul.group_listings li a.group_listing:hover {
+	background-color: #CCC;
+}
+
+.groups_search {
+	background-color: #DDD;
+}
+
+ul#tabnav li a, .tabs li a {
+	background-color: #BBB;
+	color: #666;
+}
+
+ul#tabnav li.in_section a,
+.tabs li.in_section a {
+	background-color: #FFF;
+	color: #1B1B1B;
+}
+
+.sub_sections .selected {
+	background-color: #BBB;
+}
+
+.sub_sections .start_new_discussion_button {
+	background-color: white;
+}
+
+.stickies ul li a {
+	background-color: #CCC;
+}
+
+.group_personal_settings {
+	background-color: #BBB;
+}
+
+#group ul#discussions li .post h4 a:visited {
+	background: #D00;
+	color: #1B1B1B;
+}
+
+#your_location {
+	background-color: #CCC;
+}
+
+.box.small {
+	background: #AAA;
+}
+
+.greybar {
+	background-color: #BBB;
+	border-top: 1px solid #A7A7A7;
+	border-bottom: 1px solid #A7A7A7;
+}
+
+.avatar,
+.picture,
+#profile_header header img.avatar,
+article.comment footer a.avatar img {
+	background-color: #B7B7B7;
+}
+
+#main_content, #main_content_w_secondary {
+	background-color: #DDD;
+}
+
+#profile .button a {
+	background-color: #888;
+}
+
+aside .count_total {
+	background-color: #B7B7B7;
+}
+
+aside .continuous_perving {
+	background-color: #AAA;
+	-webkit-box-shadow: 0px -1px 0px #CCC;
+}
+
+aside .back_and_forward a.prev,
+aside .back_and_forward a.next {
+	background-color: #B7B7B7;
+}
+
+section#pictures ul li a img {
+	background-color: #B7B7B7;
+}
+
+article#new_comment form fieldset {
+	background-color: #B7B7B7;
+}
+
+.picture_container .main_pic {
+	background-color: #B7B7B7;
+}
+
+aside .likes header h1 a {
+	background-color: #B7B7B7;
+	color: #777;
+}
+
+aside section header h1 {
+	color: #888;
+	text-shadow: 0 -1px 0 #DDD;
+}
+
+#fetish_header {
+	background-color: #EEE;
+}
+
+.empty {
+	background-color: #CCC;
+}
+
+.zoomScroll .zoom {
+	background-color: #B5B5B5;
+}
+
+.bc171717 {
+	background-color: #CCC;
+}
+
+#video_non_supporter {
+	background-color: #DDD;
+	-webkit-box-shadow: 0 4px 10px #CCC;
+}
+
+#video_non_supporter .highlight {
+	background-color: #AAA;
+}

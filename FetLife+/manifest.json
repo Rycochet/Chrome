@@ -1,7 +1,7 @@
 {
 	"name": "__MSG_extName__",
 	"short_name": "fl+",
-	"version": "2.0.8",
+	"version": "2.0.9",
 	"manifest_version": 2,
 	"minimum_chrome_version": "40",
 	"homepage_url": "https://chrome.google.com/webstore/detail/fetlife+/damilhebpjeefbhjdhekjeddlkhfefej",
@@ -28,7 +28,7 @@
 	},
 	"content_scripts": [
 		{
-			"js": ["jquery.js", "common.js", "bookmarks.js", "navigation.js"],
+			"js": ["jquery.js", "common.js", "bookmarks.js", "navigation.js", "theme.js"],
 			"css": ["bookmarks.css"],
 			"run_at": "document_end",
 			"matches": ["https://fetlife.com/*"]
@@ -56,5 +56,8 @@
 	"background": {
 		"persistent": true,
 		"scripts": ["common.js", "background.js"]
-	}
+	},
+	"web_accessible_resources": [
+		"themes/*.css"
+	]
 }

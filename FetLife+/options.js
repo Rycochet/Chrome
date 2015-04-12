@@ -67,6 +67,9 @@
 		$("#opt_blocked_action")
 				.on("change", null, "block_action", onSelect)
 				.val(sync.block_action);
+		$("#opt_theme")
+				.on("change", null, "theme", onSelect)
+				.val(sync.theme);
 	}
 
 	onSync(update);
