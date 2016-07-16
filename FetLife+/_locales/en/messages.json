@@ -84,6 +84,9 @@
 	"optionsThemeLight": {
 		"message": "Light"
 	},
+	"optionsWorkSafe": {
+		"message": "Safe For Work Mode"
+	},
 	"optionsMainFeed": {
 		"message": "Main Feed"
 	},
