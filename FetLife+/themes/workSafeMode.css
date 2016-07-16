@@ -1,0 +1,32 @@
+.avatar,
+.fl-avatar__img,
+.picture,
+#mini_feed img,
+#wall img{
+    -webkit-filter: blur(3px) opacity(60%) !important;
+}
+
+.fl-likes-section img {
+    -webkit-filter: blur(2px) opacity(80%);
+}
+
+.kpbox img,
+#pictures img,
+#profile img {
+    -webkit-filter: blur(10px) blur(10px) opacity(30%);
+}
+
+.avatar:hover,
+.fl-avatar__img:hover,
+.picture:hover,
+#mini_feed img:hover,
+#wall img:hover,
+.fl-likes-section img:hover,
+.kpbox img:hover,
+#pictures img:hover,
+#profile img:hover{
+/* unblur the image, but no immediately */
+    -webkit-filter: none !important;;
+    transition-duration: 200ms;
+
+}
