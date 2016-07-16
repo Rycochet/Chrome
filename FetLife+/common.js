@@ -30,7 +30,8 @@
 		block_action: "",
 		blocked: {},
 		// Theme
-		theme: ""
+		theme: "",
+		work_safe: false
 	};
 
 	window.local = {
