@@ -48,7 +48,7 @@
 	function update() {
 		for (var index in globalSync) {
 			sync[index] = globalSync[index];
-			$("input[checkbox]#opt_" + index)
+			$("input[type=checkbox]#opt_" + index)
 					.on("click", null, index, onClick)
 					.prop("checked", sync[index]);
 		}
