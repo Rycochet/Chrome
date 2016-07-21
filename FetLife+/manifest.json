@@ -47,6 +47,10 @@
 				"https://fetlife.com/groups/*/group_posts/*",
 				"https://fetlife.com/users/*"
 			]
+		}, {
+			"js": ["event.js"],
+			"run_at": "document_end",
+			"matches": ["https://fetlife.com/events/*"]
 		}
 	],
 	"browser_action": {
