@@ -185,5 +185,8 @@
 	"blockedText": {
 		"message": "Blocked",
 		"description": "Used on various pages to replace content from someone who is blocked"
+	},
+	"addToGoogleCalendar": {
+		"message": "Add to Google Calendar"
 	}
 }
