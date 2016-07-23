@@ -25,8 +25,7 @@
 .kpbox img:hover,
 #pictures img:hover,
 #profile img:hover{
-/* unblur the image, but no immediately */
+	/* unblur the image, but no immediately */
     -webkit-filter: none !important;;
     transition-duration: 200ms;
-
 }
