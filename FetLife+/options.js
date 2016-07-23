@@ -58,6 +58,9 @@
 		$("#opt_toggle2")
 				.on("change", toggleMenu)
 				.prop("checked", sync.toggle);
+		$("#opt_kandp_page")
+				.on("change", null, "kandp_page", onSelect)
+				.val(sync.kandp_page);
 		$("#opt_kandp_default")
 				.on("change", null, "kandp_default", onSelect)
 				.val(sync.kandp_default);

@@ -15,12 +15,14 @@
 
 	var isKandP = /^\/explore\//.test(window.location.pathname),
 			$header = $("#navigation_bar,#header_v2"),
-			$bar = $header.find("#ul.sections"),
-			$shorter = $bar.find("li.shorter"),
-			$longer = $bar.find("li.longer"),
-			$kandp = $bar.find("li:first a"),
+			$bar = $header.find("ul.sections"),
+			$explore = $bar.children("li:not([class])"),
+			$kandp = $explore.clone().addClass("longer").insertAfter($explore.addClass("shorter")).add($explore).children("a"),
+			$shorter = $bar.children("li.shorter"),
+			$longer = $bar.children("li.longer"),
 			$feed = $header.find("h1 a"),
 			picto = {
+				"explore": "N",
 				"groups": "g",
 				"places": "G",
 				"events": "\\",
@@ -32,8 +34,8 @@
 	var txt = document.head.textContent;
 	if (txt && txt.length) {
 		chrome.storage.local.set({
-			username: txt.match(/FetLife\.currentUser\.nickname\s*=\s*"(.+)";/)[1] || "",
-			userid: parseInt(txt.match(/FetLife\.currentUser\.id\s*=\s*(\d+);/)[1], 10) || -1
+			username: txt.match(/"nickname":"(.+)"/)[1] || "",
+			userid: parseInt(txt.match(/"id":(\d+)/)[1], 10) || -1
 		});
 	}
 
@@ -49,6 +51,7 @@
 
 	onSync(function() {
 		if (isKandP) {
+			$header.find(".messaging").css("margin-right", sync.kandp_width ? "25px" : "");
 			$("#header_v2 > .flexible_container").css("width", (sync.kandp_width ? "950px" : ""));
 			$("#notification_counts").css("margin-right", (sync.kandp_width ? "25px" : ""));
 		}
@@ -57,7 +60,7 @@
 		$feed.attr("href", sync.feed_default);
 		$kandp
 				.toggle(sync.kandp)
-				.attr("href", sync.kandp_default);
+				.attr("href", (sync.kandp_page ? sync.kandp_page + sync.kandp_default : sync.kandp_default));
 	});
 
 }(jQuery, document, window, chrome, sync));

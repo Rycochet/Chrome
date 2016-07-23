@@ -60,6 +60,21 @@
 	"optionsKandPDefault": {
 		"message": "Default page:"
 	},
+	"optionsKandPView": {
+		"message": "Default view:"
+	},
+	"optionsKandPFriends": {
+		"message": "Your Friends"
+	},
+	"optionsKandPKandP": {
+		"message": "Kinky &amp; Popular"
+	},
+	"optionsKandPFresh": {
+		"message": "Fresh &amp; Pervy"
+	},
+	"optionsKandPLove": {
+		"message": "Stuff You Love"
+	},
 	"optionsKandPEverything": {
 		"message": "Everything"
 	},

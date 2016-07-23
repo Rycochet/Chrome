@@ -72,12 +72,19 @@
 			</div>
 
 			<div class="select">
-				<label for="opt_kandp_default" data-i18n="optionsKandPDefault"></label>
+				<label for="opt_kandp_page" data-i18n="optionsKandPDefault"></label>
+				<select id="opt_kandp_page">
+					<option value="/explore/following/" data-i18n="optionsKandPFriends"></option>
+					<option value="/explore/" data-i18n="optionsKandPKandP" selected></option>
+					<option value="/explore/fresh-and-pervy/" data-i18n="optionsKandPFresh"></option>
+					<option value="/explore/stuff-you-love/" data-i18n="optionsKandPLove"></option>
+				</select>
+				<label for="opt_kandp_default" data-i18n="optionsKandPView"></label>
 				<select id="opt_kandp_default">
-					<option value="/explore/" data-i18n="optionsKandPEverything"></option>
-					<option value="/explore/pictures/" data-i18n="optionsKandPPictures"></option>
-					<option value="/explore/videos/" data-i18n="optionsKandPVideos"></option>
-					<option value="/explore/posts/" data-i18n="optionsKandPWritings"></option>
+					<option value="#/" data-i18n="optionsKandPEverything" selected></option>
+					<option value="pictures/" data-i18n="optionsKandPPictures"></option>
+					<option value="videos/" data-i18n="optionsKandPVideos"></option>
+					<option value="posts/" data-i18n="optionsKandPWritings"></option>
 				</select>
 			</div>
 		</section>
