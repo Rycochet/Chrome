@@ -2,7 +2,7 @@
 .fl-avatar__img,
 .picture,
 #mini_feed img,
-#wall img{
+#wall img {
     -webkit-filter: blur(3px) opacity(60%) !important;
 }
 
@@ -24,7 +24,7 @@
 .fl-likes-section img:hover,
 .kpbox img:hover,
 #pictures img:hover,
-#profile img:hover{
+#profile img:hover {
 	/* unblur the image, but no immediately */
     -webkit-filter: none !important;;
     transition-duration: 200ms;
