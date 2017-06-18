@@ -11,8 +11,10 @@ Features
 * "Donation..." link can be hidden via the options page.
 * "Options..." link can be disable via options page (you can still open it by right-clicking or on the Extensions page).
 * A domain ignore list - if both tabs are on ignored domains then don't bring the new one to the front.
-* [NEW] Hotkey support to toggle state and toggle ignoring domain.
-* [NEW] Optionally hold the "Ctrl" key to disable (requires additional permissions).
+* Hotkey support to toggle state and toggle ignoring domain.
+* Optionally hold the "Ctrl" key to disable (requires additional permissions).
 * Locale support (translations welcome).
 
 This extension is released under the GPL, with source code on GitHub (see the developer website link).
+
+Please note that this extension will never have advertising, tracking or analytics as part of it. Companies contacting me on either subject are simply ignored.

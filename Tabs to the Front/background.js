@@ -34,6 +34,7 @@
 	 */
 	function isIgnored(tab) {
 		var url = tab && tab.url.match(/https?:\/+([^\/]+)/);
+
 		return url ? sync.ignore.indexOf(url[1].toLowerCase()) >= 0 : null;
 	}
 
@@ -67,6 +68,7 @@
 	function update() {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			var front = isEnabled(tabs[0]);
+
 			if (sync.toggle) {
 				front = sync.front >= 0;
 			}
@@ -191,9 +193,10 @@
 	// Update display on changing active tab
 	chrome.tabs.onActivated.addListener(update);
 
-	// Watch for tab url being changed
+	// Watch for tab url being changed or the page being reloaded
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-		if (changeInfo.url) {
+		if (changeInfo.url || changeInfo.status) {
+			ctrlInTab(tabId);
 			update();
 		}
 	});

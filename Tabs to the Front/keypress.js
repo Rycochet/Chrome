@@ -1,5 +1,5 @@
 /*
- * Listen for the Ctrl key (Command on Mac) and remember it's pressed state.
+ * Listen for the Ctrl key (Command on Mac) and remember its pressed state.
  * 
  * IMPORTANT: This requires additional permission to run. The permission can
  * also be used to give full access to *everything*, so if you're not sure
@@ -8,17 +8,25 @@
  * This is the source code for "Tabs to the Front" -
  * https://chrome.google.com/webstore/detail/tabs-to-the-front/hiembaoomcehoiehhdldabfgnmphappc
  */
-(function(window, chrome) {
+(function(document, chrome) {
 	"use strict";
 
-	function sendCtrl(event) {
-		chrome.storage.local.set({
-			ctrl: event.ctrlKey
-		});
-	}
+	if (!document.tabsToTheFrontListener) {
+		var sendCtrl = function(event) {
+			// We use this next line to communicate back to the extension...
+			chrome.storage.local.set({
+				// ...to store the state of the Control key
+				ctrl: event.ctrlKey
+			});
+		}, options = {
+			// Look at the keyboard before anything else - which means anything on the page should leave us alone
+			capture: true,
+			// We never prevent the keyboard event, just watch it
+			passive: true
+		};
 
-	// Listen for the two keypress events, the "true" on the end means we're grabbing
-	// them before anything else can interrupt them...
-	window.addEventListener("keydown", sendCtrl, true);
-	window.addEventListener("keyup", sendCtrl, true);
-}(window, chrome));
+		document.tabsToTheFrontListener = true;
+		document.addEventListener("keydown", sendCtrl, options);
+		document.addEventListener("keyup", sendCtrl, options);
+	}
+}(document, chrome));
